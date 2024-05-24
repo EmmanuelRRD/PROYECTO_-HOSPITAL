@@ -3,6 +3,8 @@ package Interface;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class VentanaInicio extends JFrame {
     GridBagConstraints gbc = new GridBagConstraints();
@@ -28,7 +30,11 @@ public class VentanaInicio extends JFrame {
 
     public void  login (){
 
+        //Paneles necesarios para dar forma al login
         JPanel panelCenter= new JPanel();
+        JPanel image = new JPanel();
+        JPanel inicioSesion = new JPanel();
+
         panelCenter.setLayout(new GridBagLayout());
         panelCenter.setBackground(Color.CYAN);
         panelCenter.setPreferredSize(new Dimension(700, 450));//Dandole tamaños al panel
@@ -41,7 +47,6 @@ public class VentanaInicio extends JFrame {
         gbc.weighty = 1.0;
         add(panelCenter, gbc);
 
-        JPanel image = new JPanel();
         image.setPreferredSize(new Dimension(300, 450));
         image.setMinimumSize(new Dimension(150,225));
 
@@ -49,7 +54,6 @@ public class VentanaInicio extends JFrame {
         gbc.anchor = GridBagConstraints.WEST;//Asegura hacia donde se carga el panel
         panelCenter.add(image, gbc);
 
-        JPanel inicioSesion = new JPanel();
         inicioSesion.setPreferredSize(new Dimension(400, 450));
         inicioSesion.setMinimumSize(new Dimension(200,225));
 
@@ -57,16 +61,46 @@ public class VentanaInicio extends JFrame {
         inicioSesion.setBackground(Color.WHITE);
         gbc.anchor = GridBagConstraints.EAST;
 
+        //----------------------------------------El Login------------------------------------------
         JLabel inicio = new JLabel("INICIAR SESIÓN");
-        inicio.setBounds(110,20,400,50);
-        inicio.setForeground(Color.BLACK);
+        JLabel txtUser = new JLabel("Ingrese Usuario");
+        JLabel txtPassword = new JLabel("Ingrese Clave");
+        JTextField user = new JTextField();
+        JPasswordField password = new JPasswordField();
+        JButton btnIngresar = new JButton("INGRESAR");
+
+        inicio.setBounds(110,40,400,50);
         inicio.setOpaque(false);
         Font fuente = inicio.getFont();
-        inicio.setFont(new Font(fuente.getName(), Font.PLAIN, 24)); // Cambi
-        //inicio.set
+        inicio.setFont(new Font(fuente.getName(), Font.PLAIN, 24));
 
+        txtUser.setBounds(20, 87, 350,30);
+        txtUser.setForeground(Color.GRAY);
+        txtUser.setFont(new Font(fuente.getName(), Font.PLAIN, 18));
+
+        user.setBounds(20,120,350,30);
+        user.setFocusable(true);
+        user.setFont(new Font(fuente.getName(), Font.PLAIN, 20));
+
+        txtPassword.setBounds(20, 170, 350,30);
+        txtPassword.setForeground(Color.GRAY);
+        txtPassword.setFont(new Font(fuente.getName(), Font.PLAIN, 18));
+
+        password.setBounds(20,200,350,30);
+        password.setFont(new Font(fuente.getName(), Font.PLAIN, 20));
+
+        btnIngresar.setFont(new Font(fuente.getName(), Font.PLAIN, 20));
+        btnIngresar.setBackground(Color.BLUE);
+        btnIngresar.setForeground(Color.WHITE);
+        btnIngresar.setBounds(50,270,300,40);
+        
+
+        inicioSesion.add(user);
+        inicioSesion.add(txtUser);
+        inicioSesion.add(password);
+        inicioSesion.add(txtPassword);
+        inicioSesion.add(btnIngresar);
         inicioSesion.add(inicio);
-
         panelCenter.add(inicioSesion, gbc);
 
     }
