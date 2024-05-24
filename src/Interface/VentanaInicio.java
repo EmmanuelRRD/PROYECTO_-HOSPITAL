@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 
 public class VentanaInicio extends JFrame {
     GridBagConstraints gbc = new GridBagConstraints();
+    JPanel panelBase = new JPanel();
 
     public VentanaInicio(){
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -19,11 +20,12 @@ public class VentanaInicio extends JFrame {
         setLayout(new GridBagLayout());
 
         login();
-        JPanel image = new JPanel();
 
         gbc.fill = GridBagConstraints.BOTH;
-        image.setBackground(Color.BLACK);
-        add(image, gbc);
+        panelBase.setBackground(Color.BLACK);
+        add(panelBase, gbc);
+
+        
 
         setVisible(true);
     }
@@ -65,8 +67,8 @@ public class VentanaInicio extends JFrame {
         JLabel inicio = new JLabel("INICIAR SESIÓN");
         JLabel txtUser = new JLabel("Ingrese Usuario");
         JLabel txtPassword = new JLabel("Ingrese Clave");
-        JTextField user = new JTextField();
-        JPasswordField password = new JPasswordField();
+        JTextField user = new JTextField(20);
+        JPasswordField password = new JPasswordField(20);
         JButton btnIngresar = new JButton("INGRESAR");
 
         inicio.setBounds(110,40,400,50);
@@ -93,7 +95,23 @@ public class VentanaInicio extends JFrame {
         btnIngresar.setBackground(Color.BLUE);
         btnIngresar.setForeground(Color.WHITE);
         btnIngresar.setBounds(50,270,300,40);
-        
+        btnIngresar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String contraString = new String(password.getPassword());//El get pasword regresa un array y lo convierto a String
+                panelBase.setBackground(Color.WHITE);
+
+                if (user.getText().equals("Usuario") && contraString.equals("Clave")){
+                    //Aqui para agregar la logica para empezar a poner los demás paneles
+
+                    remove(panelCenter);
+                    revalidate();
+                    repaint();
+                }else{
+                    JOptionPane.showMessageDialog(null, "Usuario o Contraseña incorrectos");
+                }
+            }
+        });
 
         inicioSesion.add(user);
         inicioSesion.add(txtUser);
