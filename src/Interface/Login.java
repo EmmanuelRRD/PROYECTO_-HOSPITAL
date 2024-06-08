@@ -1,52 +1,47 @@
 package Interface;
 
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class VentanaInicio extends JFrame {
-    GridBagConstraints gbc = new GridBagConstraints();
-    JPanel panelBase = new JPanel();
+public class Login extends JFrame {
+    private JPasswordField password = new JPasswordField(20);
+    private GridBagConstraints gbc = new GridBagConstraints();
+    private JTextField user = new JTextField(20);
+    private JPanel inicioSesion = new JPanel();
+    private JPanel panelCenter= new JPanel();
+    private JPanel image = new JPanel();
 
-    public VentanaInicio(){
+    public Login(){
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setSize(1000, 600);
         setLocationRelativeTo(null);
-        setTitle("Hospital");
-        setLayout(null);
+        setTitle("Inicio Sesion Hospital");
         setLayout(new GridBagLayout());
 
-        login();
-
-        gbc.fill = GridBagConstraints.BOTH;
-        panelBase.setBackground(Color.BLACK);
-        add(panelBase, gbc);
-
-        
-
+        //mostrar y eliminar calando
+        loginGui("");
         setVisible(true);
+        //dispose();
+
+        //VentanaPirncipal vtn = new VentanaPirncipal();
+
+
+
+        //interfacePrincipal();
+
+
     }
 
-    public void  login (){
-
-        //Paneles necesarios para dar forma al login
-        JPanel panelCenter= new JPanel();
-        JPanel image = new JPanel();
-        JPanel inicioSesion = new JPanel();
+    public void  loginGui (String filtro){
 
         panelCenter.setLayout(new GridBagLayout());
-        panelCenter.setBackground(Color.CYAN);
         panelCenter.setPreferredSize(new Dimension(700, 450));//Dandole tamaños al panel
         panelCenter.setMinimumSize(new Dimension(300,225));
 
-        gbc.gridx = 0;
-        gbc.gridy = 0;
         gbc.fill = GridBagConstraints.NONE;//Para que no se expanda a toda la ventana
-        gbc.weightx = 1.0;
-        gbc.weighty = 1.0;
         add(panelCenter, gbc);
 
         image.setPreferredSize(new Dimension(300, 450));
@@ -67,8 +62,7 @@ public class VentanaInicio extends JFrame {
         JLabel inicio = new JLabel("INICIAR SESIÓN");
         JLabel txtUser = new JLabel("Ingrese Usuario");
         JLabel txtPassword = new JLabel("Ingrese Clave");
-        JTextField user = new JTextField(20);
-        JPasswordField password = new JPasswordField(20);
+
         JButton btnIngresar = new JButton("INGRESAR");
 
         inicio.setBounds(110,40,400,50);
@@ -98,18 +92,7 @@ public class VentanaInicio extends JFrame {
         btnIngresar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String contraString = new String(password.getPassword());//El get pasword regresa un array y lo convierto a String
-                panelBase.setBackground(Color.WHITE);
-
-                if (user.getText().equals("Usuario") && contraString.equals("Clave")){
-                    //Aqui para agregar la logica para empezar a poner los demás paneles
-
-                    remove(panelCenter);
-                    revalidate();
-                    repaint();
-                }else{
-                    JOptionPane.showMessageDialog(null, "Usuario o Contraseña incorrectos");
-                }
+                login("");
             }
         });
 
@@ -120,13 +103,24 @@ public class VentanaInicio extends JFrame {
         inicioSesion.add(btnIngresar);
         inicioSesion.add(inicio);
         panelCenter.add(inicioSesion, gbc);
+    }
 
+    public void login(String filtro){
+        String contraString = new String(password.getPassword());//El get pasword regresa un array y lo convierto a String
+
+        if (user.getText().equals("Usuario") && contraString.equals("Clave")){
+            dispose();
+            VentanaPirncipal ventanaPirncipal = new VentanaPirncipal();
+
+        }else{
+            JOptionPane.showMessageDialog(null, "Usuario o Contraseña incorrectos");
+        }
     }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                new VentanaInicio();
+                new Login();
             }
         });
     }
