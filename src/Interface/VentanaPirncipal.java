@@ -14,6 +14,8 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
     String nombreTabla = "";
     JInternalFrame ifAltas = new JInternalFrame("Agregar proveedor "+tipoProveedor, true, true, true, true);
     JInternalFrame ifBajas = new JInternalFrame("Agregar proveedor "+tipoProveedor, true, true, true, true);
+    JInternalFrame ifCambios = new JInternalFrame("Agregar proveedor "+tipoProveedor, true, true, true, true);
+    JInternalFrame ifConsultas = new JInternalFrame("Agregar proveedor "+tipoProveedor, true, true, true, true);
     private JPanel izquierdo = new JPanel();
     private JPanel derecho = new JPanel();
     JDesktopPane desktopPane = new JDesktopPane();
@@ -31,6 +33,10 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
         ifAltas.setVisible(true);
         ifBajas.setLayout(null);
         ifBajas.setVisible(true);
+        ifCambios.setLayout(null);
+        ifCambios.setVisible(true);
+        ifConsultas.setLayout(null);
+        ifConsultas.setVisible(true);
 
         interfacePrincipal();
 
@@ -133,6 +139,46 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
     }
 
     public void cambiosInterfaz(){
+        desktopPane.removeAll();
+
+        JButton btnAltas = new JButton("Actualizar Proveedor");
+        JLabel txt1= new JLabel("Identificador proveedor:");
+        JLabel txt2= new JLabel("Nombre del Proveedor:");
+        JLabel txt3= new JLabel("Primer Apellido:");
+        JLabel txt4= new JLabel("Segundo Apellido:");
+        JLabel txt5= new JLabel("Dirección:");
+        JLabel txt6= new JLabel("Num. Tel:");
+        JLabel txt7= new JLabel("Num. Fax:");
+        JTextField cajaID = new JTextField();
+        JTextField nombres = new JTextField();
+        JTextField primerAp = new JTextField();
+        JTextField segundoAp = new JTextField();
+        JTextField direccion = new JTextField();
+        JTextField numTel = new JTextField();
+        JTextField numFax = new JTextField();
+
+        agregarAll(ifCambios,txt1,50 , 20, 150,20);
+        agregarAll(ifCambios,txt2,50 , 60, 150,20);
+        agregarAll(ifCambios,txt3,50 , 100, 150,20);
+        agregarAll(ifCambios,txt4,50 , 140, 150,20);
+        agregarAll(ifCambios,txt5,50 , 180, 150,20);
+        agregarAll(ifCambios,txt6,50 , 220, 150,20);
+        agregarAll(ifCambios,txt7,50 , 260, 150,20);
+        agregarAll(ifCambios,cajaID,200 , 20, 200,20);
+        agregarAll(ifCambios,nombres,200 , 60, 200,20);
+        agregarAll(ifCambios,primerAp,200 , 100, 200,20);
+        agregarAll(ifCambios,segundoAp,200 , 140, 200,20);
+        agregarAll(ifCambios,direccion,200 , 180, 200,20);
+        agregarAll(ifCambios,numTel,200 , 220, 200,20);
+        agregarAll(ifCambios,numFax,200 , 260, 200,20);
+        disenioBotones(ifCambios,btnAltas,colorPersonalizado1,colorPersonalizado1,Color.WHITE,160,300,200,20);
+
+
+        agregarAll(desktopPane,ifCambios,0,0,1166,675);
+
+        revalidate();
+        repaint();
+
 
     }
 
@@ -170,6 +216,7 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
 
         switch (tbnToString){
             case "Tabla 1":
+                ifAltas.setTitle("");
                 remove(derecho);
                 interfazABCC();
                 revalidate();
