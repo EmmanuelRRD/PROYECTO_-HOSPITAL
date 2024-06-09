@@ -21,12 +21,11 @@ public class Login extends JFrame {
         setTitle("Inicio Sesion Hospital");
         setLayout(new GridBagLayout());
 
-        //mostrar y eliminar calando
-        loginGui("");
+        //loginGui("");
         setVisible(true);
-        //dispose();
+        dispose();
 
-        //VentanaPirncipal vtn = new VentanaPirncipal();
+        VentanaPirncipal vtn = new VentanaPirncipal();
 
 
 
