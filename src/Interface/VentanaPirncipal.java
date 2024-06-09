@@ -8,17 +8,19 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class VentanaPirncipal extends JFrame implements ActionListener{
+    JInternalFrame ifAltas = new JInternalFrame("", true, true, true, true);
+    JInternalFrame ifBajas = new JInternalFrame("", true, true, true, true);
+    JInternalFrame ifCambios = new JInternalFrame("", true, true, true, true);
+    JInternalFrame ifConsultas = new JInternalFrame("", true, true, true, true);
     Color colorPersonalizado1 = new Color(71, 72, 78);
     Color colorPersonalizado2 = new Color(54, 55, 60);
-    String tipoProveedor = "";
-    String nombreTabla = "";
-    JInternalFrame ifAltas = new JInternalFrame("Agregar proveedor "+tipoProveedor, true, true, true, true);
-    JInternalFrame ifBajas = new JInternalFrame("Agregar proveedor "+tipoProveedor, true, true, true, true);
-    JInternalFrame ifCambios = new JInternalFrame("Agregar proveedor "+tipoProveedor, true, true, true, true);
-    JInternalFrame ifConsultas = new JInternalFrame("Agregar proveedor "+tipoProveedor, true, true, true, true);
+    JDesktopPane desktopPane = new JDesktopPane();
     private JPanel izquierdo = new JPanel();
     private JPanel derecho = new JPanel();
-    JDesktopPane desktopPane = new JDesktopPane();
+    String tipoProveedor = "";
+    String nombreTabla = "";
+
+
 
     //----------------------Ventana Principal---------------------------------
     public VentanaPirncipal(){
@@ -28,15 +30,15 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
         setLocationRelativeTo(null);
         setTitle("Hospital");
         setLayout(null);
-
+        
+        altasInterfaz();
+        bajasInterfaz();
+        cambiosInterfaz();
+        consultasInterfaz();
         ifAltas.setLayout(null);
-        ifAltas.setVisible(true);
         ifBajas.setLayout(null);
-        ifBajas.setVisible(true);
         ifCambios.setLayout(null);
-        ifCambios.setVisible(true);
         ifConsultas.setLayout(null);
-        ifConsultas.setVisible(true);
 
         interfacePrincipal();
 
@@ -81,8 +83,6 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
     }
 
     public void altasInterfaz(){
-        desktopPane.removeAll();
-
         JButton btnAltas = new JButton("Agregar Proveedor");
         JLabel txt1= new JLabel("Identificador proveedor:");
         JLabel txt2= new JLabel("Nombre del Proveedor:");
@@ -115,16 +115,9 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
         agregarAll(ifAltas,numFax,200 , 260, 200,20);
         disenioBotones(ifAltas,btnAltas,colorPersonalizado1,colorPersonalizado1,Color.WHITE,160,300,200,20);
 
-
-        agregarAll(desktopPane,ifAltas,0,0,1166,675);
-
-        revalidate();
-        repaint();
     }
 
     public void bajasInterfaz(){
-        desktopPane.removeAll();
-
         JLabel txt1 = new JLabel("Ingresa el identificador del proveedor:");
         JButton btnEliminar = new JButton("Eliminar Proveedor");
         JTextField cajaNumControl = new JTextField();
@@ -133,14 +126,9 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
         agregarAll(ifBajas,cajaNumControl,55 , 60, 200,20);
         disenioBotones(ifBajas,btnEliminar,colorPersonalizado1,colorPersonalizado2,Color.WHITE,55,100,200,20);
         agregarAll(desktopPane,ifBajas,0,0,1166,675);
-
-        revalidate();
-        repaint();
     }
 
     public void cambiosInterfaz(){
-        desktopPane.removeAll();
-
         JButton btnAltas = new JButton("Actualizar Proveedor");
         JLabel txt1= new JLabel("Identificador proveedor:");
         JLabel txt2= new JLabel("Nombre del Proveedor:");
@@ -172,14 +160,6 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
         agregarAll(ifCambios,numTel,200 , 220, 200,20);
         agregarAll(ifCambios,numFax,200 , 260, 200,20);
         disenioBotones(ifCambios,btnAltas,colorPersonalizado1,colorPersonalizado1,Color.WHITE,160,300,200,20);
-
-
-        agregarAll(desktopPane,ifCambios,0,0,1166,675);
-
-        revalidate();
-        repaint();
-
-
     }
 
     public void consultasInterfaz(){
@@ -223,16 +203,32 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
                 repaint();
                 break;
             case "Altas":
-                altasInterfaz();
+                desktopPane.removeAll();
+                ifAltas.setVisible(true);
+                agregarAll(desktopPane,ifAltas,0,0,1166,675);
+                revalidate();
+                repaint();
                 break;
             case "Bajas":
-                bajasInterfaz();
+                desktopPane.removeAll();
+                ifBajas.setVisible(true);
+                agregarAll(desktopPane,ifBajas,0,0,1166,675);
+                revalidate();
+                repaint();
                 break;
             case "Cambios":
-                cambiosInterfaz();
+                desktopPane.removeAll();
+                ifCambios.setVisible(true);
+                agregarAll(desktopPane,ifCambios,0,0,1166,675);
+                revalidate();
+                repaint();
                 break;
             case "Consultas":
-                consultasInterfaz();
+                desktopPane.removeAll();
+                ifConsultas.setVisible(true);
+                agregarAll(desktopPane,ifCambios,0,0,1166,675);
+                revalidate();
+                repaint();
                 break;
 
         }
