@@ -27,10 +27,7 @@ public class Login extends JFrame {
 
         VentanaPirncipal vtn = new VentanaPirncipal();
 
-
-
         //interfacePrincipal();
-
 
     }
 

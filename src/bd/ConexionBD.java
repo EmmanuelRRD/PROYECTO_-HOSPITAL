@@ -6,9 +6,7 @@ public class ConexionBD {
     static String x;
     private Connection conexion;
     private Statement stm;
-    /* NOTA: es preferible utilizar PreparedStatement para evitar
-                SQL INJECTION
-     */
+
 
     private ResultSet resultSet;
 

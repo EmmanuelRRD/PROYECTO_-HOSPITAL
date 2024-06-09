@@ -13,6 +13,7 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
     String tipoProveedor = "";
     String nombreTabla = "";
     JInternalFrame ifAltas = new JInternalFrame("Agregar proveedor "+tipoProveedor, true, true, true, true);
+    JInternalFrame ifBajas = new JInternalFrame("Agregar proveedor "+tipoProveedor, true, true, true, true);
     private JPanel izquierdo = new JPanel();
     private JPanel derecho = new JPanel();
     JDesktopPane desktopPane = new JDesktopPane();
@@ -27,6 +28,9 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
         setLayout(null);
 
         ifAltas.setLayout(null);
+        ifAltas.setVisible(true);
+        ifBajas.setLayout(null);
+        ifBajas.setVisible(true);
 
         interfacePrincipal();
 
@@ -55,8 +59,6 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
         JButton btn_cambios = new JButton("Cambios");
         JButton btn_consultas = new JButton("Consultas");
 
-
-
         //----------------------------Panel-------------------
         desktopPane.setLayout(null);
         derecho.setLayout(null);
@@ -70,12 +72,10 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
 
         agregarComponentes(derecho,200,0,1200,70);
         agregarComponentes(desktopPane,200,70,1168,675);
-        add(desktopPane, BorderLayout.CENTER);
-
     }
 
     public void altasInterfaz(){
-        desktopPane.remove(ifAltas);
+        desktopPane.removeAll();
 
         JButton btnAltas = new JButton("Agregar Proveedor");
         JLabel txt1= new JLabel("Identificador proveedor:");
@@ -109,7 +109,7 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
         agregarAll(ifAltas,numFax,200 , 260, 200,20);
         disenioBotones(ifAltas,btnAltas,colorPersonalizado1,colorPersonalizado1,Color.WHITE,160,300,200,20);
 
-        ifAltas.setVisible(true);
+
         agregarAll(desktopPane,ifAltas,0,0,1166,675);
 
         revalidate();
@@ -117,7 +117,19 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
     }
 
     public void bajasInterfaz(){
+        desktopPane.removeAll();
 
+        JLabel txt1 = new JLabel("Ingresa el identificador del proveedor:");
+        JButton btnEliminar = new JButton("Eliminar Proveedor");
+        JTextField cajaNumControl = new JTextField();
+
+        agregarAll(ifBajas,txt1,50,20,250,20);
+        agregarAll(ifBajas,cajaNumControl,55 , 60, 200,20);
+        disenioBotones(ifBajas,btnEliminar,colorPersonalizado1,colorPersonalizado2,Color.WHITE,55,100,200,20);
+        agregarAll(desktopPane,ifBajas,0,0,1166,675);
+
+        revalidate();
+        repaint();
     }
 
     public void cambiosInterfaz(){
