@@ -1,11 +1,14 @@
 package Interface;
 
-import bd.*;
+import modelo.Proveedor;
+import controlador.ProveedorDAO;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 public class VentanaPirncipal extends JFrame implements ActionListener{
     JInternalFrame ifAltas = new JInternalFrame("", true, true, true, true);
@@ -20,7 +23,21 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
     String tipoProveedor = "";
     String nombreTabla = "";
 
-
+    JTextField cajaNumControl = new JTextField();
+    JTextField cajaID = new JTextField();
+    JTextField nombres = new JTextField();
+    JTextField primerAp = new JTextField();
+    JTextField segundoAp = new JTextField();
+    JTextField direccion = new JTextField();
+    JTextField numTel = new JTextField();
+    JTextField numFax = new JTextField();
+    JTextField cajaIDA = new JTextField();
+    JTextField nombresA = new JTextField();
+    JTextField primerApA = new JTextField();
+    JTextField segundoApA = new JTextField();
+    JTextField direccionA = new JTextField();
+    JTextField numTelA = new JTextField();
+    JTextField numFaxA = new JTextField();
 
     //----------------------Ventana Principal---------------------------------
     public VentanaPirncipal(){
@@ -30,7 +47,7 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
         setLocationRelativeTo(null);
         setTitle("Hospital");
         setLayout(null);
-        
+
         altasInterfaz();
         bajasInterfaz();
         cambiosInterfaz();
@@ -91,13 +108,14 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
         JLabel txt5= new JLabel("Dirección:");
         JLabel txt6= new JLabel("Num. Tel:");
         JLabel txt7= new JLabel("Num. Fax:");
-        JTextField cajaID = new JTextField();
-        JTextField nombres = new JTextField();
-        JTextField primerAp = new JTextField();
-        JTextField segundoAp = new JTextField();
-        JTextField direccion = new JTextField();
-        JTextField numTel = new JTextField();
-        JTextField numFax = new JTextField();
+        cajaID = new JTextField();
+        nombres = new JTextField();
+        primerAp = new JTextField();
+        segundoAp = new JTextField();
+        direccion = new JTextField();
+        numTel = new JTextField();
+        numFax = new JTextField();
+
 
         agregarAll(ifAltas,txt1,50 , 20, 150,20);
         agregarAll(ifAltas,txt2,50 , 60, 150,20);
@@ -118,12 +136,28 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
     }
 
     public void bajasInterfaz(){
-        JLabel txt1 = new JLabel("Ingresa el identificador del proveedor:");
+        JComboBox<String>comboTemp2;
+
+        comboTemp2 = new JComboBox<>();
+		comboTemp2.addItem("Elige opcion...");
+		comboTemp2.addItem("ºF");
+		comboTemp2.addItem("ºK");
+		comboTemp2.addItem("ºR");
+		add(comboTemp2);
+
+		comboTemp2.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+					JOptionPane.showMessageDialog(getContentPane(),comboTemp2.getSelectedItem());
+
+			}
+		});
+
+        JLabel txt1 = new JLabel("Selecciona el identificador del proveedor:");
         JButton btnEliminar = new JButton("Eliminar Proveedor");
-        JTextField cajaNumControl = new JTextField();
 
         agregarAll(ifBajas,txt1,50,20,250,20);
-        agregarAll(ifBajas,cajaNumControl,55 , 60, 200,20);
+        agregarAll(ifBajas,comboTemp2,55 , 60, 200,20);
         disenioBotones(ifBajas,btnEliminar,colorPersonalizado1,colorPersonalizado2,Color.WHITE,55,100,200,20);
         agregarAll(desktopPane,ifBajas,0,0,1166,675);
     }
@@ -137,13 +171,6 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
         JLabel txt5= new JLabel("Dirección:");
         JLabel txt6= new JLabel("Num. Tel:");
         JLabel txt7= new JLabel("Num. Fax:");
-        JTextField cajaID = new JTextField();
-        JTextField nombres = new JTextField();
-        JTextField primerAp = new JTextField();
-        JTextField segundoAp = new JTextField();
-        JTextField direccion = new JTextField();
-        JTextField numTel = new JTextField();
-        JTextField numFax = new JTextField();
 
         agregarAll(ifCambios,txt1,50 , 20, 150,20);
         agregarAll(ifCambios,txt2,50 , 60, 150,20);
@@ -152,18 +179,17 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
         agregarAll(ifCambios,txt5,50 , 180, 150,20);
         agregarAll(ifCambios,txt6,50 , 220, 150,20);
         agregarAll(ifCambios,txt7,50 , 260, 150,20);
-        agregarAll(ifCambios,cajaID,200 , 20, 200,20);
-        agregarAll(ifCambios,nombres,200 , 60, 200,20);
-        agregarAll(ifCambios,primerAp,200 , 100, 200,20);
-        agregarAll(ifCambios,segundoAp,200 , 140, 200,20);
-        agregarAll(ifCambios,direccion,200 , 180, 200,20);
-        agregarAll(ifCambios,numTel,200 , 220, 200,20);
-        agregarAll(ifCambios,numFax,200 , 260, 200,20);
+        agregarAll(ifCambios,cajaIDA,200 , 20, 200,20);
+        agregarAll(ifCambios,nombresA,200 , 60, 200,20);
+        agregarAll(ifCambios,primerApA,200 , 100, 200,20);
+        agregarAll(ifCambios,segundoApA,200 , 140, 200,20);
+        agregarAll(ifCambios,direccionA,200 , 180, 200,20);
+        agregarAll(ifCambios,numTelA,200 , 220, 200,20);
+        agregarAll(ifCambios,numFaxA,200 , 260, 200,20);
         disenioBotones(ifCambios,btnAltas,colorPersonalizado1,colorPersonalizado1,Color.WHITE,160,300,200,20);
     }
 
     public void consultasInterfaz(){
-
     }
 
     public void disenioBotones(JComponent nombrePanel,JButton componente,Color fondo,Color borde,Color texto, int x,int y,int largo,int alto){
@@ -188,48 +214,71 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
         componente.setBounds(x,y,largo,alto);
         contenedor.add(componente);
     }
+
+    public void restablecerIF(JInternalFrame internalFrame){
+        desktopPane.removeAll();
+        internalFrame.setVisible(true);
+        agregarAll(desktopPane,internalFrame,0,0,1166,675);
+        revalidate();
+        repaint();
+    }
+
+    public  void restablecerComponentes(){
+
+    }
 //----------------------Logica Botones---------------------------------
     @Override
     public void actionPerformed(ActionEvent e) {
+        ProveedorDAO provdao = new ProveedorDAO();
         JButton convertbutton = (JButton) e.getSource();
         String tbnToString = convertbutton.getText();
 
         switch (tbnToString){
             case "Tabla 1":
-                ifAltas.setTitle("");
                 remove(derecho);
                 interfazABCC();
                 revalidate();
                 repaint();
                 break;
             case "Altas":
-                desktopPane.removeAll();
-                ifAltas.setVisible(true);
-                agregarAll(desktopPane,ifAltas,0,0,1166,675);
-                revalidate();
-                repaint();
+                restablecerIF(ifAltas);
                 break;
             case "Bajas":
-                desktopPane.removeAll();
-                ifBajas.setVisible(true);
-                agregarAll(desktopPane,ifBajas,0,0,1166,675);
-                revalidate();
-                repaint();
+                restablecerIF(ifBajas);
                 break;
             case "Cambios":
-                desktopPane.removeAll();
-                ifCambios.setVisible(true);
-                agregarAll(desktopPane,ifCambios,0,0,1166,675);
-                revalidate();
-                repaint();
+                restablecerIF(ifCambios);
                 break;
             case "Consultas":
-                desktopPane.removeAll();
-                ifConsultas.setVisible(true);
-                agregarAll(desktopPane,ifCambios,0,0,1166,675);
-                revalidate();
-                repaint();
+                restablecerIF(ifConsultas);
                 break;
+            case "Agregar Proveedor":
+                Proveedor prov = new Proveedor(cajaID.getText(),nombres.getText(),primerAp.getText(),segundoAp.getText(),direccion.getText(),numTel.getText(),numFax.getText());
+
+                if (!cajaID.getText().equals("") && !nombres.getText().equals("") && !primerAp.getText().equals("") && !segundoAp.getText().equals("") && !direccion.getText().equals("") && !numTel.getText().equals("") && !numFax.getText().equals("")){
+
+                    if(provdao.agregarProveedor(prov)){
+                        JOptionPane.showMessageDialog(null, "Registro AGREGADO con EXITO!!!!!");
+                    }else {
+                        JOptionPane.showMessageDialog(null, "ERROR en la insercion!!!!!");
+                    }
+
+                }else{
+                    JOptionPane.showMessageDialog(null, "Asegúrate de llenar todos los espacios");
+                }
+                break;
+            case "Eliminar Proveedor":
+
+                String a = cajaNumControl.getText();
+
+                if (provdao.eliminarProveedor(a)){
+                    JOptionPane.showMessageDialog(null, "Alumno eliminado");
+                }else{
+                    JOptionPane.showMessageDialog(null, "Alumno no encontrado");
+                }
+                break;
+
+
 
         }
 
