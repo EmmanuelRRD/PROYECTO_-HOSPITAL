@@ -9,6 +9,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class VentanaPirncipal extends JFrame implements ActionListener{
     JInternalFrame ifAltas = new JInternalFrame("", true, true, true, true);
@@ -22,7 +23,6 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
     private JPanel derecho = new JPanel();
     String tipoProveedor = "";
     String nombreTabla = "";
-
     JTextField cajaNumControl = new JTextField();
     JTextField cajaID = new JTextField();
     JTextField nombres = new JTextField();
@@ -31,6 +31,7 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
     JTextField direccion = new JTextField();
     JTextField numTel = new JTextField();
     JTextField numFax = new JTextField();
+
     JTextField cajaIDA = new JTextField();
     JTextField nombresA = new JTextField();
     JTextField primerApA = new JTextField();
@@ -38,6 +39,14 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
     JTextField direccionA = new JTextField();
     JTextField numTelA = new JTextField();
     JTextField numFaxA = new JTextField();
+
+    JTextField cajaIDC = new JTextField();
+    JTextField nombresC = new JTextField();
+    JTextField primerApC = new JTextField();
+    JTextField segundoApC = new JTextField();
+    JTextField direccionC = new JTextField();
+    JTextField numTelC = new JTextField();
+    JTextField numFaxC = new JTextField();
 
     //----------------------Ventana Principal---------------------------------
     public VentanaPirncipal(){
@@ -48,6 +57,7 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
         setTitle("Hospital");
         setLayout(null);
 
+        interfazABCC();
         altasInterfaz();
         bajasInterfaz();
         cambiosInterfaz();
@@ -61,10 +71,9 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
 
         setVisible(true);
     }
-
-    //----------------------Creacion GUI---------------------------------
+    //----------------------Creacion GUI--------------------------------------
     public void interfacePrincipal(){
-        JButton btn_tabla = new JButton("Tabla 1");
+        JButton btn_tabla = new JButton("Farmaceuticos");
 
         //----------------------------Panel-------------------
         izquierdo.setLayout(null);
@@ -101,6 +110,7 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
 
     public void altasInterfaz(){
         JButton btnAltas = new JButton("Agregar Proveedor");
+        JButton btnBorrar = new JButton("REESTABLECER");
         JLabel txt1= new JLabel("Identificador proveedor:");
         JLabel txt2= new JLabel("Nombre del Proveedor:");
         JLabel txt3= new JLabel("Primer Apellido:");
@@ -132,26 +142,32 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
         agregarAll(ifAltas,numTel,200 , 220, 200,20);
         agregarAll(ifAltas,numFax,200 , 260, 200,20);
         disenioBotones(ifAltas,btnAltas,colorPersonalizado1,colorPersonalizado1,Color.WHITE,160,300,200,20);
+        botones(ifAltas,btnBorrar,colorPersonalizado1,colorPersonalizado2,Color.WHITE,420 , 20, 200,20);
 
+        btnBorrar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cajaID.setText("");
+                nombres.setText("");
+                primerAp.setText("");
+                segundoAp.setText("");
+                direccion.setText("");
+                numTel.setText("");
+                numFax.setText("");
+
+            }
+        });
     }
 
     public void bajasInterfaz(){
+        JButton btnBorrar = new JButton("REESTABLECER");
         JComboBox<String>comboTemp2;
-
         comboTemp2 = new JComboBox<>();
 		comboTemp2.addItem("Elige opcion...");
 		comboTemp2.addItem("ºF");
 		comboTemp2.addItem("ºK");
 		comboTemp2.addItem("ºR");
 		add(comboTemp2);
-
-		comboTemp2.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-					JOptionPane.showMessageDialog(getContentPane(),comboTemp2.getSelectedItem());
-
-			}
-		});
 
         JLabel txt1 = new JLabel("Selecciona el identificador del proveedor:");
         JButton btnEliminar = new JButton("Eliminar Proveedor");
@@ -160,6 +176,22 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
         agregarAll(ifBajas,comboTemp2,55 , 60, 200,20);
         disenioBotones(ifBajas,btnEliminar,colorPersonalizado1,colorPersonalizado2,Color.WHITE,55,100,200,20);
         agregarAll(desktopPane,ifBajas,0,0,1166,675);
+        botones(ifBajas,btnBorrar,colorPersonalizado1,colorPersonalizado2,Color.WHITE,420 , 20, 200,20);
+
+        comboTemp2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(getContentPane(),comboTemp2.getSelectedItem());
+
+            }
+        });
+
+        btnBorrar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
     }
 
     public void cambiosInterfaz(){
@@ -190,6 +222,46 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
     }
 
     public void consultasInterfaz(){
+        ButtonGroup group = new ButtonGroup();
+        JButton btnConsultas = new JButton("Buscar");
+        JRadioButton txt1= new JRadioButton("Identificador proveedor:");
+        JRadioButton txt2= new JRadioButton("Nombre del Proveedor:");
+        JRadioButton txt3= new JRadioButton("Primer Apellido:");
+        JRadioButton txt4= new JRadioButton("Segundo Apellido:");
+        JRadioButton txt5= new JRadioButton("Dirección:");
+        JRadioButton txt6= new JRadioButton("Num. Tel:");
+        JRadioButton txt7= new JRadioButton("Num. Fax:");
+        cajaIDC = new JTextField();
+        nombresC = new JTextField();
+        primerApC = new JTextField();
+        segundoApC = new JTextField();
+        direccionC = new JTextField();
+        numTelC = new JTextField();
+        numFaxC = new JTextField();
+
+        group.add(txt1);
+        group.add(txt2);
+        group.add(txt3);
+        group.add(txt4);
+        group.add(txt5);
+        group.add(txt6);
+        group.add(txt7);
+        agregarAll(ifConsultas,txt1,50 , 20, 200,20);
+        agregarAll(ifConsultas,txt2,50 , 60, 200,20);
+        agregarAll(ifConsultas,txt3,50 , 100, 200,20);
+        agregarAll(ifConsultas,txt4,50 , 140, 200,20);
+        agregarAll(ifConsultas,txt5,50 , 180, 200,20);
+        agregarAll(ifConsultas,txt6,50 , 220, 200,20);
+        agregarAll(ifConsultas,txt7,50 , 260, 200,20);
+        agregarAll(ifConsultas,cajaIDC,250 , 20, 200,20);
+        agregarAll(ifConsultas,nombresC,250 , 60, 200,20);
+        agregarAll(ifConsultas,primerApC,250 , 100, 200,20);
+        agregarAll(ifConsultas,segundoApC,250 , 140, 200,20);
+        agregarAll(ifConsultas,direccionC,250 , 180, 200,20);
+        agregarAll(ifConsultas,numTelC,250 , 220, 200,20);
+        agregarAll(ifConsultas,numFaxC,250 , 260, 200,20);
+        disenioBotones(ifConsultas,btnConsultas,colorPersonalizado1,colorPersonalizado1,Color.WHITE,160,300,200,20);
+
     }
 
     public void disenioBotones(JComponent nombrePanel,JButton componente,Color fondo,Color borde,Color texto, int x,int y,int largo,int alto){
@@ -202,6 +274,18 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
         componente.setForeground(texto);
         componente.setFont(nuevaFuente);
         componente.addActionListener(this);
+        nombrePanel.add(componente);
+    }
+
+    public void botones(JComponent nombrePanel,JButton componente,Color fondo,Color borde,Color texto, int x,int y,int largo,int alto){
+        Font fuente = componente.getFont();
+        Font nuevaFuente = new Font(fuente.getName(), Font.BOLD, 15);
+
+        componente.setBorder(new LineBorder(borde));
+        componente.setBounds(x,y,largo,alto);
+        componente.setBackground(fondo);
+        componente.setForeground(texto);
+        componente.setFont(nuevaFuente);
         nombrePanel.add(componente);
     }
 
@@ -223,9 +307,7 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
         repaint();
     }
 
-    public  void restablecerComponentes(){
 
-    }
 //----------------------Logica Botones---------------------------------
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -234,7 +316,7 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
         String tbnToString = convertbutton.getText();
 
         switch (tbnToString){
-            case "Tabla 1":
+            case "Farmaceuticos":
                 remove(derecho);
                 interfazABCC();
                 revalidate();
@@ -277,7 +359,40 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
                     JOptionPane.showMessageDialog(null, "Alumno no encontrado");
                 }
                 break;
+            case "Actualizar Proveedor":
+                Proveedor p = new Proveedor(cajaIDA.getText(),nombresA.getText(),primerApA.getText(),segundoApA.getText(),direccionA.getText(),numTelA.getText(),numFaxA.getText());
 
+                if(provdao.actualizarAlumno(p)){
+                    JOptionPane.showMessageDialog(null, "ACTUALIZADO con EXITO!!!!!");
+                }else{
+                    JOptionPane.showMessageDialog(null, "ERROR en la ACTUALIZACION!!!!!");
+                }
+                break;
+            case "Buscar":
+                Object[][] provDatos;
+                ArrayList lista = null;
+                JTable table;
+
+                try {
+                    lista = provdao.objProveedores("");
+                } catch (SQLException s) {
+                    throw new RuntimeException(s);
+                }
+
+                provDatos = new Object[lista.size()][];
+                for (int i = 0; i < lista.size(); i++) {
+                    provDatos[i] = (Object[]) lista.get(i);
+                }
+
+
+                String[] columnNames = {"ID_Farmaceuticos", "Nombre_Proveedor", "Primer_Ap", "Segundo_Ap","Direccion","Num_Tel","Num_Fax"};
+
+                DefaultTableModel model = new DefaultTableModel(provDatos, columnNames);
+                table = new JTable(model);
+                JScrollPane scrollPane = new JScrollPane(table);
+                //scrollPane.setBounds(50,320,900,120);
+                agregarAll(ifConsultas,scrollPane,50,350,1050,120);
+                break;
 
 
         }

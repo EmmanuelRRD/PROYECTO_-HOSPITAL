@@ -24,8 +24,7 @@ public class Login extends JFrame {
         setLayout(new GridBagLayout());
 
         //loginGui("");
-        setVisible(true);
-        dispose();
+        //setVisible(true);
 
         VentanaPirncipal vtn = new VentanaPirncipal();
 
