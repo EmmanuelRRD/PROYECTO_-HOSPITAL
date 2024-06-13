@@ -69,5 +69,27 @@ public class ProveedorDAO {
         return  litaProveedores;
     }
 
+    public ArrayList<String> buscarProveedores(String datoBuscar,String tablaSql) throws SQLException {
+        ArrayList litaProveedores = new ArrayList();
+
+        String sql = "select * from "+tablaSql;
+        ResultSet rs = conexionBD.ejecutarConsultaSQL(sql);
+
+        try{
+            rs.next();
+            do{
+                String idF = rs.getString(datoBuscar);
+                litaProveedores.add(idF);
+
+            }while (rs.next());
+
+        }catch (SQLException e){
+            System.out.println(e);
+            JOptionPane.showMessageDialog(null, "Tabla sin contenido!!!!");
+        }
+
+        return  litaProveedores;
+    }
+
 
 }

@@ -21,8 +21,11 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
     JDesktopPane desktopPane = new JDesktopPane();
     private JPanel izquierdo = new JPanel();
     private JPanel derecho = new JPanel();
+    JComboBox<String>comboTemp2;
     String tipoProveedor = "";
     String nombreTabla = "";
+
+
     JTextField cajaNumControl = new JTextField();
     JTextField cajaID = new JTextField();
     JTextField nombres = new JTextField();
@@ -103,9 +106,6 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
         disenioBotones(derecho,btn_bajas,colorPersonalizado2,borde,Color.WHITE,300,0,300,70);
         disenioBotones(derecho,btn_cambios,colorPersonalizado2,borde,Color.WHITE,600,0,300,70);
         disenioBotones(derecho,btn_consultas,colorPersonalizado2,borde,Color.WHITE,900,0,300,70);
-
-        agregarComponentes(derecho,200,0,1200,70);
-        agregarComponentes(desktopPane,200,70,1168,675);
     }
 
     public void altasInterfaz(){
@@ -160,17 +160,10 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
     }
 
     public void bajasInterfaz(){
-        JButton btnBorrar = new JButton("REESTABLECER");
-        JComboBox<String>comboTemp2;
-        comboTemp2 = new JComboBox<>();
-		comboTemp2.addItem("Elige opcion...");
-		comboTemp2.addItem("ºF");
-		comboTemp2.addItem("ºK");
-		comboTemp2.addItem("ºR");
-		add(comboTemp2);
-
         JLabel txt1 = new JLabel("Selecciona el identificador del proveedor:");
         JButton btnEliminar = new JButton("Eliminar Proveedor");
+        JButton btnBorrar = new JButton("REESTABLECER");
+        comboTemp2 = new JComboBox<>();
 
         agregarAll(ifBajas,txt1,50,20,250,20);
         agregarAll(ifBajas,comboTemp2,55 , 60, 200,20);
@@ -192,6 +185,21 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
 
             }
         });
+    }
+
+    public void menuBajas(){
+        ProveedorDAO provdao = new ProveedorDAO();
+
+        ArrayList lista;
+        try {
+            lista = provdao.buscarProveedores("ID_Farmaceuticos","farmaceuticos");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        for (Object a:lista) {
+            comboTemp2.addItem((String) a);
+        }
     }
 
     public void cambiosInterfaz(){
@@ -300,7 +308,6 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
     }
 
     public void restablecerIF(JInternalFrame internalFrame){
-        desktopPane.removeAll();
         internalFrame.setVisible(true);
         agregarAll(desktopPane,internalFrame,0,0,1166,675);
         revalidate();
@@ -317,21 +324,29 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
 
         switch (tbnToString){
             case "Farmaceuticos":
-                remove(derecho);
-                interfazABCC();
+                agregarComponentes(derecho,200,0,1200,70);
+                agregarComponentes(desktopPane,200,70,1168,675);
                 revalidate();
                 repaint();
                 break;
             case "Altas":
+                desktopPane.remove(ifAltas);
+                desktopPane.remove(ifConsultas);
                 restablecerIF(ifAltas);
                 break;
             case "Bajas":
+                menuBajas();
+                desktopPane.remove(ifBajas);
+                desktopPane.remove(ifConsultas);
                 restablecerIF(ifBajas);
                 break;
             case "Cambios":
+                desktopPane.remove(ifCambios);
+                desktopPane.remove(ifConsultas);
                 restablecerIF(ifCambios);
                 break;
             case "Consultas":
+                desktopPane.removeAll();
                 restablecerIF(ifConsultas);
                 break;
             case "Agregar Proveedor":
@@ -351,7 +366,7 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
                 break;
             case "Eliminar Proveedor":
 
-                String a = cajaNumControl.getText();
+                String a = comboTemp2.getSelectedItem().toString();
 
                 if (provdao.eliminarProveedor(a)){
                     JOptionPane.showMessageDialog(null, "Alumno eliminado");
@@ -390,7 +405,6 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
                 DefaultTableModel model = new DefaultTableModel(provDatos, columnNames);
                 table = new JTable(model);
                 JScrollPane scrollPane = new JScrollPane(table);
-                //scrollPane.setBounds(50,320,900,120);
                 agregarAll(ifConsultas,scrollPane,50,350,1050,120);
                 break;
 
