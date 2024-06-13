@@ -44,13 +44,7 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
     JTextField numTelA = new JTextField();
     JTextField numFaxA = new JTextField();
 
-    JTextField cajaIDC = new JTextField();
-    JTextField nombresC = new JTextField();
-    JTextField primerApC = new JTextField();
-    JTextField segundoApC = new JTextField();
-    JTextField direccionC = new JTextField();
-    JTextField numTelC = new JTextField();
-    JTextField numFaxC = new JTextField();
+    JTextField cajaBuscar = new JTextField();
 
     //----------------------Ventana Principal---------------------------------
     public VentanaPirncipal(){
@@ -216,45 +210,20 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
     }
 
     public void consultasInterfaz(){
-        ButtonGroup group = new ButtonGroup();
         JButton btnConsultas = new JButton("Buscar");
-        JRadioButton txt1= new JRadioButton("Identificador proveedor:");
-        JRadioButton txt2= new JRadioButton("Nombre del Proveedor:");
-        JRadioButton txt3= new JRadioButton("Primer Apellido:");
-        JRadioButton txt4= new JRadioButton("Segundo Apellido:");
-        JRadioButton txt5= new JRadioButton("Dirección:");
-        JRadioButton txt6= new JRadioButton("Num. Tel:");
-        JRadioButton txt7= new JRadioButton("Num. Fax:");
-        cajaIDC = new JTextField();
-        nombresC = new JTextField();
-        primerApC = new JTextField();
-        segundoApC = new JTextField();
-        direccionC = new JTextField();
-        numTelC = new JTextField();
-        numFaxC = new JTextField();
+        JComboBox<String>comboTemp1 = new JComboBox<>();
+        comboTemp1.addItem("Identificador proveedor");
+        comboTemp1.addItem("Nombre del Proveedor:");
+        comboTemp1.addItem("Primer Apellido");
+        comboTemp1.addItem("Segundo Apellido:");
+        comboTemp1.addItem("Dirección:");
+        comboTemp1.addItem("Num. Tel:");
+        comboTemp1.addItem("Num. Fax:");
+        cajaBuscar = new JTextField();
 
-        group.add(txt1);
-        group.add(txt2);
-        group.add(txt3);
-        group.add(txt4);
-        group.add(txt5);
-        group.add(txt6);
-        group.add(txt7);
-        agregarAll(ifConsultas,txt1,50 , 20, 200,20);
-        agregarAll(ifConsultas,txt2,50 , 60, 200,20);
-        agregarAll(ifConsultas,txt3,50 , 100, 200,20);
-        agregarAll(ifConsultas,txt4,50 , 140, 200,20);
-        agregarAll(ifConsultas,txt5,50 , 180, 200,20);
-        agregarAll(ifConsultas,txt6,50 , 220, 200,20);
-        agregarAll(ifConsultas,txt7,50 , 260, 200,20);
-        agregarAll(ifConsultas,cajaIDC,250 , 20, 200,20);
-        agregarAll(ifConsultas,nombresC,250 , 60, 200,20);
-        agregarAll(ifConsultas,primerApC,250 , 100, 200,20);
-        agregarAll(ifConsultas,segundoApC,250 , 140, 200,20);
-        agregarAll(ifConsultas,direccionC,250 , 180, 200,20);
-        agregarAll(ifConsultas,numTelC,250 , 220, 200,20);
-        agregarAll(ifConsultas,numFaxC,250 , 260, 200,20);
-        disenioBotones(ifConsultas,btnConsultas,colorPersonalizado1,colorPersonalizado1,Color.WHITE,160,300,200,20);
+        agregarAll(ifConsultas,comboTemp1,50 , 20, 200,20);
+        agregarAll(ifConsultas,cajaBuscar,275 , 20, 200,20);
+        disenioBotones(ifConsultas,btnConsultas,colorPersonalizado1,colorPersonalizado1,Color.WHITE,500,20,200,20);
 
     }
 

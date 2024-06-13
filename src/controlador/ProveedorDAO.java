@@ -62,6 +62,11 @@ public class ProveedorDAO {
         return res;
     }
 
+    public boolean consultasProveedor(Object consultaProveedor){
+
+        return true;
+    }
+
     public ArrayList objProveedores(String filtro) throws SQLException {
         ArrayList litaProveedores = new ArrayList();
 
