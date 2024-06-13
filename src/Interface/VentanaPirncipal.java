@@ -25,9 +25,7 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
     JComboBox<String>comboTemp2;
     String tipoProveedor = "";
     String nombreTabla = "";
-
-
-    JTextField cajaNumControl = new JTextField();
+    String idProveedor = "";
     JTextField cajaID = new JTextField();
     JTextField nombres = new JTextField();
     JTextField primerAp = new JTextField();
@@ -35,7 +33,6 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
     JTextField direccion = new JTextField();
     JTextField numTel = new JTextField();
     JTextField numFax = new JTextField();
-
     JTextField cajaIDA = new JTextField();
     JTextField nombresA = new JTextField();
     JTextField primerApA = new JTextField();
@@ -43,7 +40,6 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
     JTextField direccionA = new JTextField();
     JTextField numTelA = new JTextField();
     JTextField numFaxA = new JTextField();
-
     JTextField cajaBuscar = new JTextField();
 
     //----------------------Ventana Principal---------------------------------
@@ -285,6 +281,7 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
             case "Quirurgicos":
                 nombreTabla="quirurgicos";
                 tipoProveedor= "Quirurgico";
+                idProveedor = "ID_Proveedores_Quirurgicos";
                 desktopPane.removeAll();
                 agregarComponentes(derecho,200,0,1200,70);
                 agregarComponentes(desktopPane,200,70,1168,675);
@@ -294,6 +291,7 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
             case "No Quirurgicos":
                 nombreTabla="noquirurgicos";
                 tipoProveedor= "No Quirurgico";
+                idProveedor = "ID_Proveedores_No_Quirurgicos";
                 desktopPane.removeAll();
                 agregarComponentes(derecho,200,0,1200,70);
                 agregarComponentes(desktopPane,200,70,1168,675);
@@ -303,6 +301,7 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
             case "Farmaceuticos":
                 nombreTabla="farmaceuticos";
                 tipoProveedor= "Farmaceutico";
+                idProveedor ="ID_Farmaceuticos";
                 desktopPane.removeAll();
                 agregarComponentes(derecho,200,0,1200,70);
                 agregarComponentes(desktopPane,200,70,1168,675);
@@ -328,7 +327,7 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
 
                 if (!cajaID.getText().equals("") && !nombres.getText().equals("") && !primerAp.getText().equals("") && !segundoAp.getText().equals("") && !direccion.getText().equals("") && !numTel.getText().equals("") && !numFax.getText().equals("")){
 
-                    if(provdao.agregarProveedor(prov,nombreTabla)){
+                    if(provdao.agregarProveedor(prov,nombreTabla,idProveedor)){
                         JOptionPane.showMessageDialog(null, "Registro AGREGADO con EXITO!!!!!");
                     }else {
                         JOptionPane.showMessageDialog(null, "ERROR en la insercion!!!!!");
@@ -342,7 +341,7 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
 
                 String a = comboTemp2.getSelectedItem().toString();
 
-                if (provdao.eliminarProveedor(a,nombreTabla)){
+                if (provdao.eliminarProveedor(a,nombreTabla,idProveedor)){
                     JOptionPane.showMessageDialog(null, "Proveedor eliminado");
                 }else{
                     JOptionPane.showMessageDialog(null, "Proveedor no encontrado");
@@ -366,7 +365,7 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
                 JTable table;
 
                 try {
-                    lista = provdao.objProveedores("");
+                    lista = provdao.objProveedores("",nombreTabla);
                 } catch (SQLException s) {
                     throw new RuntimeException(s);
                 }

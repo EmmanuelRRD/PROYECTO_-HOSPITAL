@@ -15,11 +15,11 @@ public class ProveedorDAO {
 
     //============================= METODOS ABCC ================================
     //Metodo de ALTAS
-    public boolean agregarProveedor(Proveedor proveedor,String nombreTabla){
+    public boolean agregarProveedor(Proveedor proveedor,String nombreTabla,String idProveedor){
         PreparedStatement prdst = null;
         boolean res = false;
 
-        String sql = "INSERT INTO "+nombreTabla+" (ID_Farmaceuticos, Nombre_Proveedor, Primer_Ap, Segundo_Ap, Direccion, Num_Tel, Num_Fax) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO "+nombreTabla+" ("+idProveedor+", Nombre_Proveedor, Primer_Ap, Segundo_Ap, Direccion, Num_Tel, Num_Fax) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         Object[] parametros = {
             proveedor.getId_Proveedor(),
@@ -38,8 +38,8 @@ public class ProveedorDAO {
 
     }
 
-    public boolean eliminarProveedor(Object idProveedor,String tabla){
-        String sql = "DELETE FROM "+tabla+" WHERE ID_Farmaceuticos=?";
+    public boolean eliminarProveedor(Object idProveedor,String tabla,String identProveedor){
+        String sql = "DELETE FROM "+tabla+" WHERE "+idProveedor+"=?";
 
         return conexionBD.ejecutarInstruccionDML(sql, new Object[]{idProveedor});
     }
@@ -62,10 +62,10 @@ public class ProveedorDAO {
         return res;
     }
 
-    public ArrayList objProveedores(String filtro) throws SQLException {
+    public ArrayList objProveedores(String filtro,String tabla) throws SQLException {
         ArrayList litaProveedores = new ArrayList();
 
-        String sql = "select * from farmaceuticos";
+        String sql = "select * from "+tabla;
         ResultSet rs = conexionBD.ejecutarConsultaSQL(sql);
 
         try{
