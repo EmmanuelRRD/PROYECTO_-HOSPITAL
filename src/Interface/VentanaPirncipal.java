@@ -71,14 +71,18 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
     }
     //----------------------Creacion GUI--------------------------------------
     public void interfacePrincipal(){
-        JButton btn_tabla = new JButton("Farmaceuticos");
+        JButton btn_tablaF = new JButton("Farmaceuticos");
+        JButton btn_tablaQ = new JButton("Quirurgicos");
+        JButton btn_tablaNq = new JButton("No Quirurgicos");
 
         //----------------------------Panel-------------------
         izquierdo.setLayout(null);
         izquierdo.setBackground(colorPersonalizado1);
 
         //-------------------------Agregando_Componentes----------------
-        disenioBotones(izquierdo,btn_tabla,colorPersonalizado1,colorPersonalizado2,Color.WHITE,0,300,200,70);
+        disenioBotones(izquierdo,btn_tablaF,colorPersonalizado1,colorPersonalizado2,Color.WHITE,0,300,200,70);
+        disenioBotones(izquierdo,btn_tablaQ,colorPersonalizado1,colorPersonalizado2,Color.WHITE,0,500,200,70);
+        disenioBotones(izquierdo,btn_tablaNq,colorPersonalizado1,colorPersonalizado2,Color.WHITE,0,800,200,70);
         agregarComponentes(izquierdo,0,0,200,750);
     }
 
@@ -278,6 +282,22 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
         String tbnToString = convertbutton.getText();
 
         switch (tbnToString){
+            case "Quirurgicos":
+                nombreTabla="quirurgicos";
+                tipoProveedor= "Quirurgicos";
+                agregarComponentes(derecho,200,0,1200,70);
+                agregarComponentes(desktopPane,200,70,1168,675);
+                revalidate();
+                repaint();
+                break;
+            case "No Quirurgicos":
+                nombreTabla="noquirurgicos";
+                tipoProveedor= "No Quirurgicos";
+                agregarComponentes(derecho,200,0,1200,70);
+                agregarComponentes(desktopPane,200,70,1168,675);
+                revalidate();
+                repaint();
+                break;
             case "Farmaceuticos":
                 nombreTabla="farmaceuticos";
                 tipoProveedor= "Farmaceutico";
@@ -305,7 +325,7 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
 
                 if (!cajaID.getText().equals("") && !nombres.getText().equals("") && !primerAp.getText().equals("") && !segundoAp.getText().equals("") && !direccion.getText().equals("") && !numTel.getText().equals("") && !numFax.getText().equals("")){
 
-                    if(provdao.agregarProveedor(prov)){
+                    if(provdao.agregarProveedor(prov,nombreTabla)){
                         JOptionPane.showMessageDialog(null, "Registro AGREGADO con EXITO!!!!!");
                     }else {
                         JOptionPane.showMessageDialog(null, "ERROR en la insercion!!!!!");
@@ -319,7 +339,7 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
 
                 String a = comboTemp2.getSelectedItem().toString();
 
-                if (provdao.eliminarProveedor(a)){
+                if (provdao.eliminarProveedor(a,nombreTabla)){
                     JOptionPane.showMessageDialog(null, "Proveedor eliminado");
                 }else{
                     JOptionPane.showMessageDialog(null, "Proveedor no encontrado");
@@ -331,7 +351,7 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
             case "Actualizar Proveedor":
                 Proveedor p = new Proveedor(cajaIDA.getText(),nombresA.getText(),primerApA.getText(),segundoApA.getText(),direccionA.getText(),numTelA.getText(),numFaxA.getText());
 
-                if(provdao.actualizarProveedor(p)){
+                if(provdao.actualizarProveedor(p,nombreTabla)){
                     JOptionPane.showMessageDialog(null, "ACTUALIZADO con EXITO!!!!!");
                 }else{
                     JOptionPane.showMessageDialog(null, "ERROR en la ACTUALIZACION!!!!!");

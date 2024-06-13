@@ -15,11 +15,11 @@ public class ProveedorDAO {
 
     //============================= METODOS ABCC ================================
     //Metodo de ALTAS
-    public boolean agregarProveedor(Proveedor proveedor){
+    public boolean agregarProveedor(Proveedor proveedor,String nombreTabla){
         PreparedStatement prdst = null;
         boolean res = false;
 
-        String sql = "INSERT INTO farmaceuticos (ID_Farmaceuticos, Nombre_Proveedor, Primer_Ap, Segundo_Ap, Direccion, Num_Tel, Num_Fax) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO "+nombreTabla+" (ID_Farmaceuticos, Nombre_Proveedor, Primer_Ap, Segundo_Ap, Direccion, Num_Tel, Num_Fax) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         Object[] parametros = {
             proveedor.getId_Proveedor(),
@@ -38,14 +38,14 @@ public class ProveedorDAO {
 
     }
 
-    public boolean eliminarProveedor(Object idProveedor){
-        String sql = "DELETE FROM farmaceuticos WHERE ID_Farmaceuticos=?";
+    public boolean eliminarProveedor(Object idProveedor,String tabla){
+        String sql = "DELETE FROM "+tabla+" WHERE ID_Farmaceuticos=?";
 
         return conexionBD.ejecutarInstruccionDML(sql, new Object[]{idProveedor});
     }
 
-    public boolean actualizarProveedor(Proveedor proveedor){
-        String sql = "UPDATE farmaceuticos SET Nombre_Proveedor=?, Primer_Ap=?, Segundo_AP=?, Direccion=?, Num_Tel=?, Num_Fax=? WHERE ID_Farmaceuticos=?" ;
+    public boolean actualizarProveedor(Proveedor proveedor,String nombreTabla){
+        String sql = "UPDATE "+nombreTabla+" SET Nombre_Proveedor=?, Primer_Ap=?, Segundo_AP=?, Direccion=?, Num_Tel=?, Num_Fax=? WHERE ID_Farmaceuticos=?" ;
         boolean res = false;
 
         Object[] parametros = {
@@ -60,11 +60,6 @@ public class ProveedorDAO {
         ConexionBD conexionBD = new ConexionBD();
         res = conexionBD.ejecutarInstruccionDML(sql, parametros);
         return res;
-    }
-
-    public boolean consultasProveedor(Object consultaProveedor){
-
-        return true;
     }
 
     public ArrayList objProveedores(String filtro) throws SQLException {
