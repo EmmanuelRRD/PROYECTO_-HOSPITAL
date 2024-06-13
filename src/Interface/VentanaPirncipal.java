@@ -123,8 +123,6 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
         direccion = new JTextField();
         numTel = new JTextField();
         numFax = new JTextField();
-
-
         agregarAll(ifAltas,txt1,50 , 20, 150,20);
         agregarAll(ifAltas,txt2,50 , 60, 150,20);
         agregarAll(ifAltas,txt3,50 , 100, 150,20);
@@ -169,7 +167,7 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
         agregarAll(desktopPane,ifBajas,0,0,1166,675);
 
         botones(ifBajas,btnBorrar,colorPersonalizado1,colorPersonalizado2,Color.WHITE,300 , 20, 200,20);
-        
+
 
     }
 
@@ -260,6 +258,10 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
             @Override
             public void actionPerformed(ActionEvent e) {
                 cajaBuscar.setText("");
+
+                if (comboTemp1.getItemCount() > 0) {
+                    comboTemp1.setSelectedIndex(0);
+                }
             }
         });
 
