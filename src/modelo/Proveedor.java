@@ -34,9 +34,9 @@ public class Proveedor {
 
     public Object[] tablaContenidoProveedor() {
 
-        Object[] objetoAlumno = {id_Proveedor,nombre,primerAP,segundoAP,direccion,numTel,numTel};
+        Object[] objetoProveedor = {id_Proveedor,nombre,primerAP,segundoAP,direccion,numTel,numTel};
 
-        return objetoAlumno;
+        return objetoProveedor;
 
 
     }

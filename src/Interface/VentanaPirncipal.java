@@ -13,19 +13,21 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class VentanaPirncipal extends JFrame implements ActionListener{
-    JInternalFrame ifAltas = new JInternalFrame("", true, true, true, true);
-    JInternalFrame ifBajas = new JInternalFrame("", true, true, true, true);
-    JInternalFrame ifCambios = new JInternalFrame("", true, true, true, true);
-    JInternalFrame ifConsultas = new JInternalFrame("", true, true, true, true);
-    Color colorPersonalizado1 = new Color(71, 72, 78);
-    Color colorPersonalizado2 = new Color(54, 55, 60);
-    JDesktopPane desktopPane = new JDesktopPane();
+    private String idProveedor = "";
+    private JInternalFrame ifAltas = new JInternalFrame("", true, true, true, true);
+    private JInternalFrame ifBajas = new JInternalFrame("", true, true, true, true);
+    private JInternalFrame ifCambios = new JInternalFrame("", true, true, true, true);
+    private JInternalFrame ifConsultas = new JInternalFrame("", true, true, true, true);
+    private String[] columnNames = {idProveedor, "Nombre_Proveedor", "Primer_Ap", "Segundo_Ap","Direccion","Num_Tel","Num_Fax"};
+    private Color colorPersonalizado1 = new Color(71, 72, 78);
+    private Color colorPersonalizado2 = new Color(54, 55, 60);
+    private JDesktopPane desktopPane = new JDesktopPane();
     private JPanel izquierdo = new JPanel();
     private JPanel derecho = new JPanel();
-    JComboBox<String>comboTemp2;
-    String tipoProveedor = "";
-    String nombreTabla = "";
-    String idProveedor = "";
+    private JComboBox<String>comboTemp2;
+    private String tipoProveedor = "";
+    private String nombreTabla = "";
+    private JTable table;
     JTextField cajaID = new JTextField();
     JTextField nombres = new JTextField();
     JTextField primerAp = new JTextField();
@@ -172,7 +174,7 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
 
         ArrayList lista;
         try {
-            lista = provdao.buscarProveedores("ID_Farmaceuticos",nombreTabla);
+            lista = provdao.buscarProveedores(idProveedor,nombreTabla);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -225,6 +227,14 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
         agregarAll(ifConsultas,cajaBuscar,275 , 20, 200,20);
         disenioBotones(ifConsultas,btnConsultas,colorPersonalizado1,colorPersonalizado1,Color.WHITE,500,20,200,20);
 
+        comboTemp1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int selectedIndex = comboTemp1.getSelectedIndex();
+                System.out.println(selectedIndex);
+            }
+        });
+
     }
 
     public void disenioBotones(JComponent nombrePanel,JButton componente,Color fondo,Color borde,Color texto, int x,int y,int largo,int alto){
@@ -276,6 +286,7 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
         ProveedorDAO provdao = new ProveedorDAO();
         JButton convertbutton = (JButton) e.getSource();
         String tbnToString = convertbutton.getText();
+        JScrollPane scrollPane = new JScrollPane(table);
 
         switch (tbnToString){
             case "Quirurgicos":
@@ -362,10 +373,10 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
             case "Buscar":
                 Object[][] provDatos;
                 ArrayList lista = null;
-                JTable table;
+
 
                 try {
-                    lista = provdao.objProveedores(idProveedor,nombreTabla);
+                    lista = provdao.tablaCompletaProveedores(idProveedor,nombreTabla);
                 } catch (SQLException s) {
                     throw new RuntimeException(s);
                 }
@@ -375,11 +386,28 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
                     provDatos[i] = (Object[]) lista.get(i);
                 }
 
-                String[] columnNames = {"ID_Farmaceuticos", "Nombre_Proveedor", "Primer_Ap", "Segundo_Ap","Direccion","Num_Tel","Num_Fax"};
+
 
                 DefaultTableModel model = new DefaultTableModel(provDatos, columnNames);
                 table = new JTable(model);
-                JScrollPane scrollPane = new JScrollPane(table);
+
+                agregarAll(ifConsultas,scrollPane,50,350,1050,120);
+                break;
+            case "Buscar2":
+                Object[][] prDatos;
+
+                try {
+                    lista = provdao.tablaCompletaProveedores(idProveedor,nombreTabla);
+                } catch (SQLException s) {
+                    throw new RuntimeException(s);
+                }
+
+                provDatos = new Object[lista.size()][];
+                for (int i = 0; i < lista.size(); i++) {
+                    provDatos[i] = (Object[]) lista.get(i);
+                }
+
+                DefaultTableModel model2 = new DefaultTableModel(provDatos, columnNames);
                 agregarAll(ifConsultas,scrollPane,50,350,1050,120);
                 break;
 

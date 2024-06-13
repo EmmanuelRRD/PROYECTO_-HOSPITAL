@@ -62,7 +62,7 @@ public class ProveedorDAO {
         return res;
     }
 
-    public ArrayList objProveedores(String idFarmaciutico,String tabla) throws SQLException {
+    public ArrayList tablaCompletaProveedores(String idFarmaciutico,String tabla) throws SQLException {
         ArrayList litaProveedores = new ArrayList();
 
         String sql = "select * from "+tabla;
@@ -113,6 +113,51 @@ public class ProveedorDAO {
 
         return  litaProveedores;
     }
+
+    public String[] arregloDatos(String id_Proveedor, String nombre, String primerAP, String segundoAP, String direccion, String numTel, String numFax) {
+
+        String[] datos = {id_Proveedor, nombre, primerAP, segundoAP, direccion, numTel, numFax};
+
+        return datos;
+    }
+
+    public ArrayList<String> consultarProveedor(String datoBuscar,String idProveedor,String tablaSql) throws SQLException {
+        ArrayList litaProveedores = new ArrayList();
+        Proveedor p = null;
+        String sql = "select * from "+tablaSql;
+        ResultSet rs = conexionBD.ejecutarConsultaSQL(sql);
+
+        try{
+            rs.next();
+            do{
+                String[] contenedor= new String[7];
+
+                String idF = rs.getString(idProveedor);
+                String nP = rs.getString("Nombre_Proveedor");
+                String apU = rs.getString("Primer_Ap");
+                String sgAP = rs.getString("Segundo_Ap");
+                String d = rs.getString("Direccion");
+                String nT = rs.getString("Num_Tel");
+                String  nF = rs.getString("Num_Fax");
+
+                contenedor = arregloDatos(idF,nP,apU,sgAP,d,nT,nF);
+                for(String a: contenedor){
+
+                    if (a.equals(datoBuscar)){
+                        p = new Proveedor(idF,nP,apU,sgAP,d,nT,nF);
+                    }
+                    litaProveedores.add(p.tablaContenidoProveedor());
+                }
+
+            }while (rs.next());
+
+        }catch (SQLException e){
+            System.out.println(e);
+        }
+
+        return  litaProveedores;
+    }
+
 
 
 }
