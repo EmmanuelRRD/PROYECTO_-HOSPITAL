@@ -2,6 +2,7 @@ package Interface;
 
 import modelo.Proveedor;
 import controlador.ProveedorDAO;
+
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
@@ -162,22 +163,13 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
     public void bajasInterfaz(){
         JLabel txt1 = new JLabel("Selecciona el identificador del proveedor:");
         JButton btnEliminar = new JButton("Eliminar Proveedor");
-        JButton btnBorrar = new JButton("REESTABLECER");
         comboTemp2 = new JComboBox<>();
 
         agregarAll(ifBajas,txt1,50,20,250,20);
         agregarAll(ifBajas,comboTemp2,55 , 60, 200,20);
         disenioBotones(ifBajas,btnEliminar,colorPersonalizado1,colorPersonalizado2,Color.WHITE,55,100,200,20);
         agregarAll(desktopPane,ifBajas,0,0,1166,675);
-        botones(ifBajas,btnBorrar,colorPersonalizado1,colorPersonalizado2,Color.WHITE,420 , 20, 200,20);
 
-
-        btnBorrar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        });
     }
 
     public void menuBajas(){
@@ -319,12 +311,14 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
         switch (tbnToString){
             case "Farmaceuticos":
                 nombreTabla="farmaceuticos";
+                tipoProveedor= "Farmaceutico";
                 agregarComponentes(derecho,200,0,1200,70);
                 agregarComponentes(desktopPane,200,70,1168,675);
                 revalidate();
                 repaint();
                 break;
             case "Altas":
+                ifAltas.setTitle("Proveedor "+tipoProveedor);
                 restablecerIF(ifAltas);
                 break;
             case "Bajas":
@@ -357,9 +351,9 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
                 String a = comboTemp2.getSelectedItem().toString();
 
                 if (provdao.eliminarProveedor(a)){
-                    JOptionPane.showMessageDialog(null, "Alumno eliminado");
+                    JOptionPane.showMessageDialog(null, "Proveedor eliminado");
                 }else{
-                    JOptionPane.showMessageDialog(null, "Alumno no encontrado");
+                    JOptionPane.showMessageDialog(null, "Proveedor no encontrado");
                 }
                 menuBajas();
                 revalidate();
@@ -368,7 +362,7 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
             case "Actualizar Proveedor":
                 Proveedor p = new Proveedor(cajaIDA.getText(),nombresA.getText(),primerApA.getText(),segundoApA.getText(),direccionA.getText(),numTelA.getText(),numFaxA.getText());
 
-                if(provdao.actualizarAlumno(p)){
+                if(provdao.actualizarProveedor(p)){
                     JOptionPane.showMessageDialog(null, "ACTUALIZADO con EXITO!!!!!");
                 }else{
                     JOptionPane.showMessageDialog(null, "ERROR en la ACTUALIZACION!!!!!");

@@ -44,18 +44,22 @@ public class ProveedorDAO {
         return conexionBD.ejecutarInstruccionDML(sql, new Object[]{idProveedor});
     }
 
-    public boolean actualizarAlumno(Proveedor proveedor){
-        String sql = "UPDATE farmaceuticos SET Nombre_Proveedor='"+proveedor.getNombre()+"',Primer_Ap='"+proveedor.getPrimerAP()+"', Segundo_AP='"+proveedor.getSegundoAP()+"',Direccion='"+proveedor.getDireccion()+"', Num_Tel='"+proveedor.getNumTel()+"', Num_Fax='"+proveedor.getNumFax()+"'";
+    public boolean actualizarProveedor(Proveedor proveedor){
+        String sql = "UPDATE farmaceuticos SET Nombre_Proveedor=?, Primer_Ap=?, Segundo_AP=?, Direccion=?, Num_Tel=?, Num_Fax=? WHERE ID_Farmaceuticos=?" ;
+        boolean res = false;
+
         Object[] parametros = {
-                proveedor.getId_Proveedor(),
                 proveedor.getNombre(),
                 proveedor.getPrimerAP(),
                 proveedor.getSegundoAP(),
                 proveedor.getDireccion(),
                 proveedor.getNumTel(),
-                proveedor.getNumFax()
+                proveedor.getNumFax(),
+                proveedor.getId_Proveedor()
         };
-        return true;
+        ConexionBD conexionBD = new ConexionBD();
+        res = conexionBD.ejecutarInstruccionDML(sql, parametros);
+        return res;
     }
 
     public ArrayList objProveedores(String filtro) throws SQLException {
