@@ -397,7 +397,6 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
                 break;
             case "Buscar2":
                 ArrayList lista2 = null;
-                Object[][] prDatos;
 
                 try {
                     lista2 = provdao.consultarProveedor(posicion,cajaBuscar.getText(),idProveedor,nombreTabla);
@@ -405,11 +404,7 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
                     throw new RuntimeException(s);
                 }
 
-                provDatos = new Object[lista2.size()][];
-                for (int i = 0; i < lista2.size(); i++) {
-                    provDatos[i] = (Object[]) lista2.get(i);
-                }
-
+                mostrarTabla(lista2);
                 break;
 
         }
