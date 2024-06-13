@@ -62,7 +62,7 @@ public class ProveedorDAO {
         return res;
     }
 
-    public ArrayList objProveedores(String filtro,String tabla) throws SQLException {
+    public ArrayList objProveedores(String idFarmaciutico,String tabla) throws SQLException {
         ArrayList litaProveedores = new ArrayList();
 
         String sql = "select * from "+tabla;
@@ -71,7 +71,7 @@ public class ProveedorDAO {
         try{
             rs.next();
             do{
-                String idF = rs.getString("ID_Farmaceuticos");
+                String idF = rs.getString(idFarmaciutico);
                 String nP = rs.getString("Nombre_Proveedor");
                 String apU = rs.getString("Primer_Ap");
                 String sgAP = rs.getString("Segundo_Ap");

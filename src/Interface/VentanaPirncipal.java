@@ -365,7 +365,7 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
                 JTable table;
 
                 try {
-                    lista = provdao.objProveedores("",nombreTabla);
+                    lista = provdao.objProveedores(idProveedor,nombreTabla);
                 } catch (SQLException s) {
                     throw new RuntimeException(s);
                 }
