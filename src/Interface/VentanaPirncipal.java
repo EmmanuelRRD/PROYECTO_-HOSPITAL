@@ -171,13 +171,6 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
         agregarAll(desktopPane,ifBajas,0,0,1166,675);
         botones(ifBajas,btnBorrar,colorPersonalizado1,colorPersonalizado2,Color.WHITE,420 , 20, 200,20);
 
-        comboTemp2.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(getContentPane(),comboTemp2.getSelectedItem());
-
-            }
-        });
 
         btnBorrar.addActionListener(new ActionListener() {
             @Override
@@ -188,11 +181,12 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
     }
 
     public void menuBajas(){
+        comboTemp2.removeAllItems();
         ProveedorDAO provdao = new ProveedorDAO();
 
         ArrayList lista;
         try {
-            lista = provdao.buscarProveedores("ID_Farmaceuticos","farmaceuticos");
+            lista = provdao.buscarProveedores("ID_Farmaceuticos",nombreTabla);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -308,13 +302,13 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
     }
 
     public void restablecerIF(JInternalFrame internalFrame){
+        desktopPane.removeAll();
         internalFrame.setVisible(true);
         agregarAll(desktopPane,internalFrame,0,0,1166,675);
         revalidate();
         repaint();
     }
-
-
+    
 //----------------------Logica Botones---------------------------------
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -324,29 +318,23 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
 
         switch (tbnToString){
             case "Farmaceuticos":
+                nombreTabla="farmaceuticos";
                 agregarComponentes(derecho,200,0,1200,70);
                 agregarComponentes(desktopPane,200,70,1168,675);
                 revalidate();
                 repaint();
                 break;
             case "Altas":
-                desktopPane.remove(ifAltas);
-                desktopPane.remove(ifConsultas);
                 restablecerIF(ifAltas);
                 break;
             case "Bajas":
                 menuBajas();
-                desktopPane.remove(ifBajas);
-                desktopPane.remove(ifConsultas);
                 restablecerIF(ifBajas);
                 break;
             case "Cambios":
-                desktopPane.remove(ifCambios);
-                desktopPane.remove(ifConsultas);
                 restablecerIF(ifCambios);
                 break;
             case "Consultas":
-                desktopPane.removeAll();
                 restablecerIF(ifConsultas);
                 break;
             case "Agregar Proveedor":
@@ -373,6 +361,9 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
                 }else{
                     JOptionPane.showMessageDialog(null, "Alumno no encontrado");
                 }
+                menuBajas();
+                revalidate();
+                repaint();
                 break;
             case "Actualizar Proveedor":
                 Proveedor p = new Proveedor(cajaIDA.getText(),nombresA.getText(),primerApA.getText(),segundoApA.getText(),direccionA.getText(),numTelA.getText(),numFaxA.getText());
@@ -399,7 +390,6 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
                     provDatos[i] = (Object[]) lista.get(i);
                 }
 
-
                 String[] columnNames = {"ID_Farmaceuticos", "Nombre_Proveedor", "Primer_Ap", "Segundo_Ap","Direccion","Num_Tel","Num_Fax"};
 
                 DefaultTableModel model = new DefaultTableModel(provDatos, columnNames);
@@ -407,7 +397,6 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
                 JScrollPane scrollPane = new JScrollPane(table);
                 agregarAll(ifConsultas,scrollPane,50,350,1050,120);
                 break;
-
 
         }
 

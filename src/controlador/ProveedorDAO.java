@@ -85,7 +85,6 @@ public class ProveedorDAO {
 
         }catch (SQLException e){
             System.out.println(e);
-            JOptionPane.showMessageDialog(null, "Tabla sin contenido!!!!");
         }
 
         return  litaProveedores;
