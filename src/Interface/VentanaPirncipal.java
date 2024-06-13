@@ -25,24 +25,25 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
     private JPanel izquierdo = new JPanel();
     private JPanel derecho = new JPanel();
     private JComboBox<String>comboTemp2;
+    private int posicion=0;
     private String tipoProveedor = "";
     private String nombreTabla = "";
     private JTable table;
-    JTextField cajaID = new JTextField();
-    JTextField nombres = new JTextField();
-    JTextField primerAp = new JTextField();
-    JTextField segundoAp = new JTextField();
-    JTextField direccion = new JTextField();
-    JTextField numTel = new JTextField();
-    JTextField numFax = new JTextField();
-    JTextField cajaIDA = new JTextField();
-    JTextField nombresA = new JTextField();
-    JTextField primerApA = new JTextField();
-    JTextField segundoApA = new JTextField();
-    JTextField direccionA = new JTextField();
-    JTextField numTelA = new JTextField();
-    JTextField numFaxA = new JTextField();
-    JTextField cajaBuscar = new JTextField();
+    private JTextField cajaID = new JTextField();
+    private JTextField nombres = new JTextField();
+    private JTextField primerAp = new JTextField();
+    private JTextField segundoAp = new JTextField();
+    private JTextField direccion = new JTextField();
+    private JTextField numTel = new JTextField();
+    private JTextField numFax = new JTextField();
+    private JTextField cajaIDA = new JTextField();
+    private JTextField nombresA = new JTextField();
+    private JTextField primerApA = new JTextField();
+    private JTextField segundoApA = new JTextField();
+    private JTextField direccionA = new JTextField();
+    private JTextField numTelA = new JTextField();
+    private JTextField numFaxA = new JTextField();
+    private JTextField cajaBuscar = new JTextField();
 
     //----------------------Ventana Principal---------------------------------
     public VentanaPirncipal(){
@@ -212,7 +213,7 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
     }
 
     public void consultasInterfaz(){
-        JButton btnConsultas = new JButton("Buscar");
+        JButton btnConsultas = new JButton("Buscar2");
         JComboBox<String>comboTemp1 = new JComboBox<>();
         comboTemp1.addItem("Identificador proveedor");
         comboTemp1.addItem("Nombre del Proveedor:");
@@ -230,8 +231,7 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
         comboTemp1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int selectedIndex = comboTemp1.getSelectedIndex();
-                System.out.println(selectedIndex);
+                posicion = comboTemp1.getSelectedIndex();
             }
         });
 
@@ -386,8 +386,6 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
                     provDatos[i] = (Object[]) lista.get(i);
                 }
 
-
-
                 DefaultTableModel model = new DefaultTableModel(provDatos, columnNames);
                 table = new JTable(model);
 
@@ -397,7 +395,7 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
                 Object[][] prDatos;
 
                 try {
-                    lista = provdao.tablaCompletaProveedores(idProveedor,nombreTabla);
+                    lista = provdao.consultarProveedor(posicion,cajaBuscar.getText(),idProveedor,nombreTabla);
                 } catch (SQLException s) {
                     throw new RuntimeException(s);
                 }

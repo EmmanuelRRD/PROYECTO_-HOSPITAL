@@ -121,7 +121,7 @@ public class ProveedorDAO {
         return datos;
     }
 
-    public ArrayList<String> consultarProveedor(String datoBuscar,String idProveedor,String tablaSql) throws SQLException {
+    public ArrayList<String> consultarProveedor(int posicion,String datoBuscar,String idProveedor,String tablaSql) throws SQLException {
         ArrayList litaProveedores = new ArrayList();
         Proveedor p = null;
         String sql = "select * from "+tablaSql;
@@ -141,12 +141,13 @@ public class ProveedorDAO {
                 String  nF = rs.getString("Num_Fax");
 
                 contenedor = arregloDatos(idF,nP,apU,sgAP,d,nT,nF);
-                for(String a: contenedor){
 
-                    if (a.equals(datoBuscar)){
+                if (datoBuscar.equals(contenedor[posicion])){
+
                         p = new Proveedor(idF,nP,apU,sgAP,d,nT,nF);
-                    }
-                    litaProveedores.add(p.tablaContenidoProveedor());
+                        litaProveedores.add(p.tablaContenidoProveedor());
+                        System.out.println("Siuuuuu");
+                        System.out.println(litaProveedores.getFirst());
                 }
 
             }while (rs.next());
