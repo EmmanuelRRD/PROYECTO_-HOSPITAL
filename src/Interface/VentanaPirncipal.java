@@ -308,7 +308,7 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
         revalidate();
         repaint();
     }
-    
+
 //----------------------Logica Botones---------------------------------
     @Override
     public void actionPerformed(ActionEvent e) {

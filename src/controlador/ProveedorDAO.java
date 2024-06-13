@@ -4,11 +4,9 @@ import bd.ConexionBD;
 import modelo.Proveedor;
 
 import javax.swing.*;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.util.ArrayList;
 
 public class ProveedorDAO {
@@ -18,24 +16,46 @@ public class ProveedorDAO {
     //============================= METODOS ABCC ================================
     //Metodo de ALTAS
     public boolean agregarProveedor(Proveedor proveedor){
+        PreparedStatement prdst = null;
         boolean res = false;
 
-        String sql = "INSERT INTO farmaceuticos VALUES('"+proveedor.getId_Proveedor()+"','"+proveedor.getNombre()+"','"+proveedor.getPrimerAP()+"','"+proveedor.getSegundoAP()+"','"+proveedor.getDireccion()+"','"+proveedor.getNumTel()+"','"+proveedor.getNumFax()+"')";
+        String sql = "INSERT INTO farmaceuticos (ID_Farmaceuticos, Nombre_Proveedor, Primer_Ap, Segundo_Ap, Direccion, Num_Tel, Num_Fax) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-        res = conexionBD.ejecutarInstruccionDML(sql);
+        Object[] parametros = {
+            proveedor.getId_Proveedor(),
+            proveedor.getNombre(),
+            proveedor.getPrimerAP(),
+            proveedor.getSegundoAP(),
+            proveedor.getDireccion(),
+            proveedor.getNumTel(),
+            proveedor.getNumFax()
+        };
+
+        ConexionBD conexionBD = new ConexionBD();
+        res = conexionBD.ejecutarInstruccionDML(sql, parametros);
+
         return res;
 
     }
 
-    public boolean eliminarProveedor(String numControl){
-        String sql = "DELETE FROM farmaceuticos WHERE ID_Farmaceuticos='"+numControl+"'";
+    public boolean eliminarProveedor(Object idProveedor){
+        String sql = "DELETE FROM farmaceuticos WHERE ID_Farmaceuticos=?";
 
-        return conexionBD.ejecutarInstruccionDML(sql);
+        return conexionBD.ejecutarInstruccionDML(sql, new Object[]{idProveedor});
     }
 
     public boolean actualizarAlumno(Proveedor proveedor){
         String sql = "UPDATE farmaceuticos SET Nombre_Proveedor='"+proveedor.getNombre()+"',Primer_Ap='"+proveedor.getPrimerAP()+"', Segundo_AP='"+proveedor.getSegundoAP()+"',Direccion='"+proveedor.getDireccion()+"', Num_Tel='"+proveedor.getNumTel()+"', Num_Fax='"+proveedor.getNumFax()+"'";
-        return conexionBD.ejecutarInstruccionDML(sql);
+        Object[] parametros = {
+                proveedor.getId_Proveedor(),
+                proveedor.getNombre(),
+                proveedor.getPrimerAP(),
+                proveedor.getSegundoAP(),
+                proveedor.getDireccion(),
+                proveedor.getNumTel(),
+                proveedor.getNumFax()
+        };
+        return true;
     }
 
     public ArrayList objProveedores(String filtro) throws SQLException {

@@ -4,7 +4,7 @@ import java.sql.*;
 
 public class ConexionBD {
 
-    static String x;
+    private PreparedStatement pstmt;
     private Connection conexion;
     private Statement stm;
     /* NOTA: es preferible utilizar PreparedStatement para evitar
@@ -33,18 +33,19 @@ public class ConexionBD {
 
     //metodo para operaciones ABC (Altas, Bajas y Cambios)
     //(Data Manipulation Language)
-    public boolean ejecutarInstruccionDML(String instruccionSQL){
+    public boolean ejecutarInstruccionDML(String instruccionSQL, Object[] parametros) {
         boolean res = false;
         try {
-            stm = conexion.createStatement();
-
-            if (stm.executeUpdate(instruccionSQL) >= 1)
-                res=true;
-
+            pstmt = conexion.prepareStatement(instruccionSQL);
+            for (int i = 0; i < parametros.length; i++) {
+                pstmt.setObject(i + 1, parametros[i]);
+            }
+            if (pstmt.executeUpdate() >= 1) {
+                res = true;
+            }
         } catch (SQLException e) {
             System.out.println("Error en instrucción");
-            throw new RuntimeException(e);
-
+            e.printStackTrace();
         }
         return res;
     }
