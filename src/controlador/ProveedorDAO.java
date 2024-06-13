@@ -39,7 +39,7 @@ public class ProveedorDAO {
     }
 
     public boolean eliminarProveedor(Object idProveedor,String tabla,String identProveedor){
-        String sql = "DELETE FROM "+tabla+" WHERE "+idProveedor+"=?";
+        String sql = "DELETE FROM "+tabla+" WHERE "+identProveedor+"=?";
 
         return conexionBD.ejecutarInstruccionDML(sql, new Object[]{idProveedor});
     }

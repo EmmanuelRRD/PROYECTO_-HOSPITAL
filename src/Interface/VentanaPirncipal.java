@@ -160,6 +160,7 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
     public void bajasInterfaz(){
         JLabel txt1 = new JLabel("Selecciona el identificador del proveedor:");
         JButton btnEliminar = new JButton("Eliminar Proveedor");
+        JButton btnBorrar = new JButton("REESTABLECER");
         comboTemp2 = new JComboBox<>();
 
         agregarAll(ifBajas,txt1,50,20,250,20);
@@ -167,9 +168,13 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
         disenioBotones(ifBajas,btnEliminar,colorPersonalizado1,colorPersonalizado2,Color.WHITE,55,100,200,20);
         agregarAll(desktopPane,ifBajas,0,0,1166,675);
 
+        botones(ifBajas,btnBorrar,colorPersonalizado1,colorPersonalizado2,Color.WHITE,300 , 20, 200,20);
+        
+
     }
 
     public void menuBajas(){
+        JButton btnBorrar = new JButton("REESTABLECER");
         comboTemp2.removeAllItems();
         ProveedorDAO provdao = new ProveedorDAO();
 
@@ -183,10 +188,12 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
         for (Object a:lista) {
             comboTemp2.addItem((String) a);
         }
+
     }
 
     public void cambiosInterfaz(){
         JButton btnAltas = new JButton("Actualizar Proveedor");
+        JButton btnBorrar = new JButton("REESTABLECER");
         JLabel txt1= new JLabel("Identificador proveedor:");
         JLabel txt2= new JLabel("Nombre del Proveedor:");
         JLabel txt3= new JLabel("Primer Apellido:");
@@ -210,10 +217,28 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
         agregarAll(ifCambios,numTelA,200 , 220, 200,20);
         agregarAll(ifCambios,numFaxA,200 , 260, 200,20);
         disenioBotones(ifCambios,btnAltas,colorPersonalizado1,colorPersonalizado1,Color.WHITE,160,300,200,20);
+        botones(ifCambios,btnBorrar,colorPersonalizado1,colorPersonalizado2,Color.WHITE,420 , 20, 200,20);
+
+        btnBorrar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+
+                cajaIDA.setText("");
+                nombresA.setText("");
+                primerApA.setText("");
+                segundoApA.setText("");
+                direccionA.setText("");
+                numTelA.setText("");
+                numFaxA.setText("");
+
+            }
+        });
     }
 
     public void consultasInterfaz(){
         JButton btnConsultas = new JButton("Buscar");
+        JButton btnReestablecer = new JButton("REESTABLECER");
         JButton btnMostrarTabla = new JButton("Mostrar todos los Proveedores");
         JComboBox<String>comboTemp1 = new JComboBox<>();
         comboTemp1.addItem("Identificador proveedor");
@@ -228,7 +253,15 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
         agregarAll(ifConsultas,comboTemp1,50 , 20, 200,20);
         agregarAll(ifConsultas,cajaBuscar,275 , 20, 200,20);
         disenioBotones(ifConsultas,btnConsultas,colorPersonalizado1,colorPersonalizado1,Color.WHITE,500,20,200,20);
-        disenioBotones(ifConsultas,btnMostrarTabla,colorPersonalizado1,colorPersonalizado1,Color.WHITE,500,50,200,20);
+        disenioBotones(ifConsultas,btnReestablecer,colorPersonalizado1,colorPersonalizado1,Color.WHITE,750,20,200,20);
+        disenioBotones(ifConsultas,btnMostrarTabla,colorPersonalizado1,colorPersonalizado1,Color.WHITE,500,50,250,20);
+
+        btnReestablecer.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cajaBuscar.setText("");
+            }
+        });
 
         comboTemp1.addActionListener(new ActionListener() {
             @Override
