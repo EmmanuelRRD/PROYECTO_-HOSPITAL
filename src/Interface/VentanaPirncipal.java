@@ -214,6 +214,7 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
 
     public void consultasInterfaz(){
         JButton btnConsultas = new JButton("Buscar");
+        JButton btnMostrarTabla = new JButton("Mostrar todos los Proveedores");
         JComboBox<String>comboTemp1 = new JComboBox<>();
         comboTemp1.addItem("Identificador proveedor");
         comboTemp1.addItem("Nombre del Proveedor:");
@@ -227,6 +228,7 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
         agregarAll(ifConsultas,comboTemp1,50 , 20, 200,20);
         agregarAll(ifConsultas,cajaBuscar,275 , 20, 200,20);
         disenioBotones(ifConsultas,btnConsultas,colorPersonalizado1,colorPersonalizado1,Color.WHITE,500,20,200,20);
+        disenioBotones(ifConsultas,btnMostrarTabla,colorPersonalizado1,colorPersonalizado1,Color.WHITE,500,50,200,20);
 
         comboTemp1.addActionListener(new ActionListener() {
             @Override
@@ -384,7 +386,7 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
                     JOptionPane.showMessageDialog(null, "ERROR en la ACTUALIZACION!!!!!");
                 }
                 break;
-            case "Buscar":
+            case "Mostrar todos los Proveedores":
                 Object[][] provDatos;
                 ArrayList lista = null;
 
@@ -395,7 +397,7 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
                 }
                 mostrarTabla(lista);
                 break;
-            case "Buscar2":
+            case "Buscar":
                 ArrayList lista2 = null;
 
                 try {
