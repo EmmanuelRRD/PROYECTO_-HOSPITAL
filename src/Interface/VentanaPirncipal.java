@@ -378,7 +378,7 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
             case "Actualizar Proveedor":
                 Proveedor p = new Proveedor(cajaIDA.getText(),nombresA.getText(),primerApA.getText(),segundoApA.getText(),direccionA.getText(),numTelA.getText(),numFaxA.getText());
 
-                if(provdao.actualizarProveedor(p,nombreTabla)){
+                if(provdao.actualizarProveedor(p,nombreTabla,idProveedor)){
                     JOptionPane.showMessageDialog(null, "ACTUALIZADO con EXITO!!!!!");
                 }else{
                     JOptionPane.showMessageDialog(null, "ERROR en la ACTUALIZACION!!!!!");

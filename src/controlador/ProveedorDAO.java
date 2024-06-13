@@ -44,8 +44,8 @@ public class ProveedorDAO {
         return conexionBD.ejecutarInstruccionDML(sql, new Object[]{idProveedor});
     }
 
-    public boolean actualizarProveedor(Proveedor proveedor,String nombreTabla){
-        String sql = "UPDATE "+nombreTabla+" SET Nombre_Proveedor=?, Primer_Ap=?, Segundo_AP=?, Direccion=?, Num_Tel=?, Num_Fax=? WHERE ID_Farmaceuticos=?" ;
+    public boolean actualizarProveedor(Proveedor proveedor,String nombreTabla,String idProveeedor){
+        String sql = "UPDATE "+nombreTabla+" SET Nombre_Proveedor=?, Primer_Ap=?, Segundo_AP=?, Direccion=?, Num_Tel=?, Num_Fax=? WHERE "+idProveeedor+"=?" ;
         boolean res = false;
 
         Object[] parametros = {
