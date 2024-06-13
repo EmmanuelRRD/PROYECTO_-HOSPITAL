@@ -213,7 +213,7 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
     }
 
     public void consultasInterfaz(){
-        JButton btnConsultas = new JButton("Buscar2");
+        JButton btnConsultas = new JButton("Buscar");
         JComboBox<String>comboTemp1 = new JComboBox<>();
         comboTemp1.addItem("Identificador proveedor");
         comboTemp1.addItem("Nombre del Proveedor:");
@@ -280,13 +280,27 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
         repaint();
     }
 
+    public void mostrarTabla(ArrayList contenido){
+        Object[][] provDatos;
+
+        provDatos = new Object[contenido.size()][];
+        for (int i = 0; i < contenido.size(); i++) {
+            provDatos[i] = (Object[]) contenido.get(i);
+        }
+
+        DefaultTableModel model = new DefaultTableModel(provDatos, columnNames);
+        table = new JTable(model);
+        JScrollPane scrollPane = new JScrollPane(table);
+        agregarAll(ifConsultas,scrollPane,50,350,1050,120);
+    }
+
 //----------------------Logica Botones---------------------------------
     @Override
     public void actionPerformed(ActionEvent e) {
         ProveedorDAO provdao = new ProveedorDAO();
         JButton convertbutton = (JButton) e.getSource();
         String tbnToString = convertbutton.getText();
-        JScrollPane scrollPane = new JScrollPane(table);
+
 
         switch (tbnToString){
             case "Quirurgicos":
@@ -374,39 +388,28 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
                 Object[][] provDatos;
                 ArrayList lista = null;
 
-
                 try {
                     lista = provdao.tablaCompletaProveedores(idProveedor,nombreTabla);
                 } catch (SQLException s) {
                     throw new RuntimeException(s);
                 }
-
-                provDatos = new Object[lista.size()][];
-                for (int i = 0; i < lista.size(); i++) {
-                    provDatos[i] = (Object[]) lista.get(i);
-                }
-
-                DefaultTableModel model = new DefaultTableModel(provDatos, columnNames);
-                table = new JTable(model);
-
-                agregarAll(ifConsultas,scrollPane,50,350,1050,120);
+                mostrarTabla(lista);
                 break;
             case "Buscar2":
+                ArrayList lista2 = null;
                 Object[][] prDatos;
 
                 try {
-                    lista = provdao.consultarProveedor(posicion,cajaBuscar.getText(),idProveedor,nombreTabla);
+                    lista2 = provdao.consultarProveedor(posicion,cajaBuscar.getText(),idProveedor,nombreTabla);
                 } catch (SQLException s) {
                     throw new RuntimeException(s);
                 }
 
-                provDatos = new Object[lista.size()][];
-                for (int i = 0; i < lista.size(); i++) {
-                    provDatos[i] = (Object[]) lista.get(i);
+                provDatos = new Object[lista2.size()][];
+                for (int i = 0; i < lista2.size(); i++) {
+                    provDatos[i] = (Object[]) lista2.get(i);
                 }
 
-                DefaultTableModel model2 = new DefaultTableModel(provDatos, columnNames);
-                agregarAll(ifConsultas,scrollPane,50,350,1050,120);
                 break;
 
         }
