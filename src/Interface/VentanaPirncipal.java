@@ -81,8 +81,8 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
 
         //-------------------------Agregando_Componentes----------------
         disenioBotones(izquierdo,btn_tablaF,colorPersonalizado1,colorPersonalizado2,Color.WHITE,0,300,200,70);
-        disenioBotones(izquierdo,btn_tablaQ,colorPersonalizado1,colorPersonalizado2,Color.WHITE,0,500,200,70);
-        disenioBotones(izquierdo,btn_tablaNq,colorPersonalizado1,colorPersonalizado2,Color.WHITE,0,800,200,70);
+        disenioBotones(izquierdo,btn_tablaQ,colorPersonalizado1,colorPersonalizado2,Color.WHITE,0,370,200,70);
+        disenioBotones(izquierdo,btn_tablaNq,colorPersonalizado1,colorPersonalizado2,Color.WHITE,0,440,200,70);
         agregarComponentes(izquierdo,0,0,200,750);
     }
 
@@ -284,7 +284,8 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
         switch (tbnToString){
             case "Quirurgicos":
                 nombreTabla="quirurgicos";
-                tipoProveedor= "Quirurgicos";
+                tipoProveedor= "Quirurgico";
+                desktopPane.removeAll();
                 agregarComponentes(derecho,200,0,1200,70);
                 agregarComponentes(desktopPane,200,70,1168,675);
                 revalidate();
@@ -292,7 +293,8 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
                 break;
             case "No Quirurgicos":
                 nombreTabla="noquirurgicos";
-                tipoProveedor= "No Quirurgicos";
+                tipoProveedor= "No Quirurgico";
+                desktopPane.removeAll();
                 agregarComponentes(derecho,200,0,1200,70);
                 agregarComponentes(desktopPane,200,70,1168,675);
                 revalidate();
@@ -301,6 +303,7 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
             case "Farmaceuticos":
                 nombreTabla="farmaceuticos";
                 tipoProveedor= "Farmaceutico";
+                desktopPane.removeAll();
                 agregarComponentes(derecho,200,0,1200,70);
                 agregarComponentes(desktopPane,200,70,1168,675);
                 revalidate();
