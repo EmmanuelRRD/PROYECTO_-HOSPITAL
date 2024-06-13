@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Proyecto_Final:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Proyecto_Final_jar</output-path>
+    <root id="archive" name="Proyecto_Final.jar">
+      <element id="module-output" name="Proyecto_Final" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/mysql-connector-java-8.0.30.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/protobuf-java-3.19.4.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

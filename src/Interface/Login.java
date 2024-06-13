@@ -23,10 +23,8 @@ public class Login extends JFrame {
         setTitle("Inicio Sesion Hospital");
         setLayout(new GridBagLayout());
 
-        //loginGui("");
-        //setVisible(true);
-
-        VentanaPirncipal vtn = new VentanaPirncipal();
+        loginGui("");
+        setVisible(true);
 
         //interfacePrincipal();
 
