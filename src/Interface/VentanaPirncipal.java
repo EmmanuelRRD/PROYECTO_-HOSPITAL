@@ -24,6 +24,7 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
     private String idProveedor = "",tipoProveedor = "",nombreTabla = "";
     private JTable table;
     private int posicion=0;
+    JScrollPane scrollPane= new JScrollPane();
 
     //----------------------Ventana Principal---------------------------------
     public VentanaPirncipal(){
@@ -43,6 +44,7 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
         ifBajas.setLayout(null);
         ifCambios.setLayout(null);
         ifConsultas.setLayout(null);
+        ifTabla.setLayout(null);
 
         interfacePrincipal();
 
@@ -87,6 +89,38 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
     }
 
     //----------------------Internal Frames---------------------------------
+    public void mostrarTabla(ArrayList contenido){
+        Object[][] provDatos;
+
+        columnNames[0] = tipoProveedor;
+
+        provDatos = new Object[contenido.size()][];
+        for (int i = 0; i < contenido.size(); i++) {
+            provDatos[i] = (Object[]) contenido.get(i);
+        }
+
+        DefaultTableModel model = new DefaultTableModel(provDatos, columnNames);
+        table = new JTable(model);
+
+        ifTabla.remove(scrollPane);
+        scrollPane = new JScrollPane(table);
+        agregarAll(ifTabla,scrollPane,60,20,1020,120);
+        revalidate();
+        repaint();
+    }
+
+    public void mostrarTodos(){
+        ProveedorDAO provdao = new ProveedorDAO();
+        ArrayList lista = null;
+
+        try {
+            lista = provdao.tablaCompletaProveedores(idProveedor,nombreTabla);
+        } catch (SQLException s) {
+            throw new RuntimeException(s);
+        }
+        mostrarTabla(lista);
+    }
+
     public void altasInterfaz(){
         JButton btnAltas = new JButton("Agregar Proveedor");
         JButton btnBorrar = new JButton("REESTABLECER");
@@ -120,7 +154,6 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
         agregarTextProperty(ifAltas,numFax,200 , 260, 200,20,"Numerico","10");
         disenioBotones(ifAltas,btnAltas,colorPersonalizado1,colorPersonalizado1,Color.WHITE,160,300,200,20);
         botones(ifAltas,btnBorrar,colorPersonalizado1,colorPersonalizado2,Color.WHITE,420 , 20, 200,20);
-        Propiedades();
         btnBorrar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -319,19 +352,7 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
         repaint();
     }
 
-    public void mostrarTabla(ArrayList contenido){
-        Object[][] provDatos;
 
-        provDatos = new Object[contenido.size()][];
-        for (int i = 0; i < contenido.size(); i++) {
-            provDatos[i] = (Object[]) contenido.get(i);
-        }
-
-        DefaultTableModel model = new DefaultTableModel(provDatos, columnNames);
-        table = new JTable(model);
-        JScrollPane scrollPane = new JScrollPane(table);
-        agregarAll(ifConsultas,scrollPane,50,350,1050,120);
-    }
 
 //----------------------Logica Botones---------------------------------
     @Override
@@ -339,7 +360,6 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
         ProveedorDAO provdao = new ProveedorDAO();
         JButton convertbutton = (JButton) e.getSource();
         String tbnToString = convertbutton.getText();
-
 
         switch (tbnToString){
             case "Quirurgicos":
@@ -349,6 +369,8 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
                 desktopPane.removeAll();
                 agregarComponentes(derecho,200,0,1200,70);
                 agregarComponentes(desktopPane,200,70,1168,675);
+                restablecerIF(ifTabla,0,335,1168,335);
+                mostrarTodos();
                 revalidate();
                 repaint();
                 break;
@@ -359,6 +381,8 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
                 desktopPane.removeAll();
                 agregarComponentes(derecho,200,0,1200,70);
                 agregarComponentes(desktopPane,200,70,1168,675);
+                restablecerIF(ifTabla,0,335,1168,335);
+                mostrarTodos();
                 revalidate();
                 repaint();
                 break;
@@ -369,24 +393,31 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
                 desktopPane.removeAll();
                 agregarComponentes(derecho,200,0,1200,70);
                 agregarComponentes(desktopPane,200,70,1168,675);
+                restablecerIF(ifTabla,0,335,1168,335);
+                mostrarTodos();
                 revalidate();
                 repaint();
                 break;
             case "Altas":
+                desktopPane.remove(ifConsultas);
                 ifAltas.setTitle("Agregar Proveedor"+tipoProveedor);
                 restablecerIF(ifAltas,0,0,389,335);
                 break;
             case "Bajas":
+                desktopPane.remove(ifConsultas);
                 ifBajas.setTitle("Eliminar Proveedor "+tipoProveedor);
                 menuBajas();
                 restablecerIF(ifBajas,389,0,389,335);
                 break;
             case "Cambios":
+                desktopPane.remove(ifConsultas);
                 ifCambios.setTitle("Actualizar Proveedor "+tipoProveedor);
                 restablecerIF(ifCambios,778,0,389,335);
                 break;
             case "Consultas":
-                desktopPane.removeAll();
+                desktopPane.remove(ifAltas);
+                desktopPane.remove(ifBajas);
+                desktopPane.remove(ifCambios);
                 ifConsultas.setTitle("Tabla Proveedores "+tipoProveedor);
                 restablecerIF(ifConsultas,0,0,1168,335);
                 break;
@@ -426,17 +457,6 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
                 }else{
                     JOptionPane.showMessageDialog(null, "ERROR en la ACTUALIZACION!!!!!");
                 }
-                break;
-            case "Mostrar todos los Proveedores":
-                Object[][] provDatos;
-                ArrayList lista = null;
-
-                try {
-                    lista = provdao.tablaCompletaProveedores(idProveedor,nombreTabla);
-                } catch (SQLException s) {
-                    throw new RuntimeException(s);
-                }
-                mostrarTabla(lista);
                 break;
             case "Buscar":
                 ArrayList lista2 = null;

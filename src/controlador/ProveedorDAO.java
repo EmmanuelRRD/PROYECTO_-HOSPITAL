@@ -146,8 +146,6 @@ public class ProveedorDAO {
 
                         p = new Proveedor(idF,nP,apU,sgAP,d,nT,nF);
                         litaProveedores.add(p.tablaContenidoProveedor());
-                        System.out.println("Siuuuuu");
-                        System.out.println(litaProveedores.getFirst());
                 }
 
             }while (rs.next());
