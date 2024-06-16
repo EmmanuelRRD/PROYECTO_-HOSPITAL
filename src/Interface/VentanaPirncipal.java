@@ -104,7 +104,7 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
 
         ifTabla.remove(scrollPane);
         scrollPane = new JScrollPane(table);
-        agregarAll(ifTabla,scrollPane,60,20,1020,120);
+        agregarAll(ifTabla,scrollPane,60,10,1020,160);
         revalidate();
         repaint();
     }
@@ -297,8 +297,8 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
     public void Propiedades(){
         System.out.println((String) cajaID.getClientProperty("Tipo"));
         System.out.println((String) cajaID.getClientProperty("Rango"));
-    }
 
+    }
 
     //----------------------Metodos Para Crear Componentes--------------------------------------
 
@@ -352,8 +352,6 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
         repaint();
     }
 
-
-
 //----------------------Logica Botones---------------------------------
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -369,7 +367,8 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
                 desktopPane.removeAll();
                 agregarComponentes(derecho,200,0,1200,70);
                 agregarComponentes(desktopPane,200,70,1168,675);
-                restablecerIF(ifTabla,0,335,1168,335);
+                restablecerIF(ifTabla,0,440,1168,235);
+                ifTabla.setTitle(tipoProveedor);
                 mostrarTodos();
                 revalidate();
                 repaint();
@@ -381,7 +380,8 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
                 desktopPane.removeAll();
                 agregarComponentes(derecho,200,0,1200,70);
                 agregarComponentes(desktopPane,200,70,1168,675);
-                restablecerIF(ifTabla,0,335,1168,335);
+                restablecerIF(ifTabla,0,440,1168,235);
+                ifTabla.setTitle(tipoProveedor);
                 mostrarTodos();
                 revalidate();
                 repaint();
@@ -393,7 +393,8 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
                 desktopPane.removeAll();
                 agregarComponentes(derecho,200,0,1200,70);
                 agregarComponentes(desktopPane,200,70,1168,675);
-                restablecerIF(ifTabla,0,335,1168,335);
+                restablecerIF(ifTabla,0,440,1168,235);
+                ifTabla.setTitle(tipoProveedor);
                 mostrarTodos();
                 revalidate();
                 repaint();
@@ -401,25 +402,25 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
             case "Altas":
                 desktopPane.remove(ifConsultas);
                 ifAltas.setTitle("Agregar Proveedor"+tipoProveedor);
-                restablecerIF(ifAltas,0,0,389,335);
+                restablecerIF(ifAltas,0,0,389,440);
                 break;
             case "Bajas":
                 desktopPane.remove(ifConsultas);
                 ifBajas.setTitle("Eliminar Proveedor "+tipoProveedor);
                 menuBajas();
-                restablecerIF(ifBajas,389,0,389,335);
+                restablecerIF(ifBajas,389,0,389,440);
                 break;
             case "Cambios":
                 desktopPane.remove(ifConsultas);
                 ifCambios.setTitle("Actualizar Proveedor "+tipoProveedor);
-                restablecerIF(ifCambios,778,0,389,335);
+                restablecerIF(ifCambios,778,0,389,440);
                 break;
             case "Consultas":
                 desktopPane.remove(ifAltas);
                 desktopPane.remove(ifBajas);
                 desktopPane.remove(ifCambios);
                 ifConsultas.setTitle("Tabla Proveedores "+tipoProveedor);
-                restablecerIF(ifConsultas,0,0,1168,335);
+                restablecerIF(ifConsultas,0,0,1168,440);
                 break;
             case "Agregar Proveedor":
                 Proveedor prov = new Proveedor(cajaID.getText(),nombres.getText(),primerAp.getText(),segundoAp.getText(),direccion.getText(),numTel.getText(),numFax.getText());
@@ -435,6 +436,7 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
                 }else{
                     JOptionPane.showMessageDialog(null, "Asegúrate de llenar todos los espacios");
                 }
+                mostrarTodos();
                 break;
             case "Eliminar Proveedor":
 
@@ -446,6 +448,7 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
                     JOptionPane.showMessageDialog(null, "Proveedor no encontrado");
                 }
                 menuBajas();
+                mostrarTodos();
                 revalidate();
                 repaint();
                 break;
@@ -457,6 +460,7 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
                 }else{
                     JOptionPane.showMessageDialog(null, "ERROR en la ACTUALIZACION!!!!!");
                 }
+                mostrarTodos();
                 break;
             case "Buscar":
                 ArrayList lista2 = null;
@@ -466,8 +470,10 @@ public class VentanaPirncipal extends JFrame implements ActionListener{
                 } catch (SQLException s) {
                     throw new RuntimeException(s);
                 }
-
                 mostrarTabla(lista2);
+                break;
+            case "Mostrar todos los Proveedores":
+                mostrarTodos();
                 break;
             default:
 
