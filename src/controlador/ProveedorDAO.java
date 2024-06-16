@@ -159,6 +159,4 @@ public class ProveedorDAO {
         return  litaProveedores;
     }
 
-
-
 }
