@@ -4,7 +4,6 @@ import bd.ConexionBD;
 import modelo.Proveedor;
 
 import javax.swing.*;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -16,7 +15,6 @@ public class ProveedorDAO {
     //============================= METODOS ABCC ================================
     //Metodo de ALTAS
     public boolean agregarProveedor(Proveedor proveedor,String nombreTabla,String idProveedor){
-        PreparedStatement prdst = null;
         boolean res = false;
 
         String sql = "INSERT INTO "+nombreTabla+" ("+idProveedor+", Nombre_Proveedor, Primer_Ap, Segundo_Ap, Direccion, Num_Tel, Num_Fax) VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -32,6 +30,7 @@ public class ProveedorDAO {
         };
 
         ConexionBD conexionBD = new ConexionBD();
+
         res = conexionBD.ejecutarInstruccionDML(sql, parametros);
 
         return res;
