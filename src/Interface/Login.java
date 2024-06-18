@@ -1,20 +1,30 @@
 package Interface;
 
 import bd.ConexionBD;
-import controlador.ProveedorDAO;
+import controlador.PasswordDAO;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Login extends JFrame {
+public class Login extends JFrame implements ActionListener {
     private JPasswordField password = new JPasswordField(20);
     private GridBagConstraints gbc = new GridBagConstraints();
-    private JTextField usuario = new JTextField(20);
+    private JTextField usuario = new JTextField(20),userCreate = new JTextField(), passwordCreate = new JTextField();
     private JPanel inicioSesion = new JPanel();
     private JPanel panelCenter= new JPanel();
     private JPanel image = new JPanel();
+    private JFrame crearUser = new JFrame();
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                new Login();
+            }
+        });
+    }
 
     public Login(){
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -90,6 +100,10 @@ public class Login extends JFrame {
             }
         });
 
+        //Agregar el boton de agregar contra y usuario
+        JButton btnAgregarUser = new JButton("Registrarse");
+        disenioBotones(inicioSesion,btnAgregarUser,Color.BLUE,Color.blue,Color.WHITE,20,400,100,20);
+
         inicioSesion.add(usuario);
         inicioSesion.add(txtUser);
         inicioSesion.add(password);
@@ -100,10 +114,10 @@ public class Login extends JFrame {
     }
 
     public void login(String filtro){
-        ProveedorDAO pd = new ProveedorDAO();
+        PasswordDAO pd = new PasswordDAO();
         String contraString = new String(password.getPassword());//El get pasword regresa un array y lo convierto a String
 
-        String pass = pd.user(usuario.getText());
+        String pass = pd.validarDatos(usuario.getText());
 
         if (!pass.equals("")){
 
@@ -119,13 +133,92 @@ public class Login extends JFrame {
         }
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                new Login();
-            }
-        });
+    //----------------------Metodos Para Crear Componentes--------------------------------------
+    public void disenioBotones(JComponent nombrePanel,JButton componente,Color fondo,Color borde,Color texto, int x,int y,int largo,int alto){
+        Font fuente = componente.getFont();
+        Font nuevaFuente = new Font(fuente.getName(), Font.BOLD, 15);
+
+        componente.setBorder(new LineBorder(borde));
+        componente.setBounds(x,y,largo,alto);
+        componente.setBackground(fondo);
+        componente.setForeground(texto);
+        componente.setFont(nuevaFuente);
+        componente.addActionListener(this);
+        nombrePanel.add(componente);
     }
+
+    public void botonesJframe(JFrame nombrePanel,JButton componente,Color fondo,Color borde,Color texto, int x,int y,int largo,int alto){
+        Font fuente = componente.getFont();
+        Font nuevaFuente = new Font(fuente.getName(), Font.BOLD, 15);
+
+        componente.setBorder(new LineBorder(borde));
+        componente.setBounds(x,y,largo,alto);
+        componente.setBackground(fondo);
+        componente.setForeground(texto);
+        componente.setFont(nuevaFuente);
+        componente.addActionListener(this);
+        nombrePanel.add(componente);
+    }
+    public void jfRegistro(){
+        JButton btnregistrar = new JButton("Crear cuenta");
+        JLabel txt1 = new JLabel("Ingresa tu NOMBRE de usuario:");
+        JLabel txt2 = new JLabel("Ingresa tu CONTRASEÑA:");
+
+        agregarJframe(crearUser,txt1,10,10,200,20);
+        agregarJframe(crearUser,userCreate,10,40,200,20);
+        agregarJframe(crearUser,txt2,10,70,200,20);
+        agregarJframe(crearUser,passwordCreate,10,100,200,20);
+
+        botonesJframe(crearUser,btnregistrar,Color.BLUE,Color.BLUE,Color.WHITE,10,130,200,20);
+    }
+
+    public void agregarJframe(JFrame contenedor,JComponent componente, int x,int y,int largo,int alto){
+        componente.setBounds(x,y,largo,alto);
+        contenedor.add(componente);
+    }
+
+    //----------------------Eventos--------------------------------------
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        PasswordDAO provdao = new PasswordDAO();
+        JButton convertbutton = (JButton) e.getSource();
+        String tbnToString = convertbutton.getText();
+
+        switch (tbnToString){
+            case "Registrarse":
+                crearUser.dispose();
+                userCreate.setText("");
+                passwordCreate.setText("");
+                crearUser.setSize(250, 300);
+                crearUser.setLocationRelativeTo(null);
+                crearUser.setTitle("Registrarse");
+                crearUser.setLayout(null);
+
+                jfRegistro();
+
+                crearUser.setVisible(true);
+                break;
+            case "Crear cuenta":
+                PasswordDAO passwordDAO = new PasswordDAO();
+                String us = userCreate.getText();
+                String pass = passwordCreate.getText();
+
+                if (!(userCreate.getText().equals("") && passwordCreate.getText().equals(""))) {
+
+                    if (passwordDAO.crearUsuario(us, pass)) {
+                        JOptionPane.showMessageDialog(null, "Usuario registrado con EXITO!!!!!");
+                        crearUser.dispose();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "ERROR  en el registro!!!!!");
+                    }
+                }else {
+                    JOptionPane.showMessageDialog(null, "Recuerda escribir tu" +
+                            "\n contraseña y usuario");
+                }
+                break;
+        }
+    }
+
 }
 
 
