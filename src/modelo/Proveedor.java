@@ -5,40 +5,49 @@ public class Proveedor {
     private String nombre;
     private String primerAP;
     private String segundoAP;
-    private String direccion;
     private String numTel;
     private String numFax;
+    private String estado;
+    private String municipio;
+    private String colonia;
+    private String calle;
+    private String numeroCalle;
 
-    public Proveedor(String id_Proveedor, String nombre, String primerAP, String segundoAP, String direccion, String numTel, String numFax) {
+    public Proveedor(String id_Proveedor, String nombre, String primerAP, String segundoAP, String numTel, String numFax, String estado, String municipio, String colonia, String calle, String numeroCalle) {
         this.id_Proveedor = id_Proveedor;
         this.nombre = nombre;
         this.primerAP = primerAP;
         this.segundoAP = segundoAP;
-        this.direccion = direccion;
         this.numTel = numTel;
         this.numFax = numFax;
+        this.estado = estado;
+        this.municipio = municipio;
+        this.colonia = colonia;
+        this.calle = calle;
+        this.numeroCalle = numeroCalle;
+    }
+
+    public Object[] tablaContenidoProveedor() {
+        Object[] objetoProveedor = {id_Proveedor,nombre,primerAP,segundoAP,numTel,numFax,estado,municipio,colonia,calle,numeroCalle};
+
+        return objetoProveedor;
     }
 
     @Override
     public String toString() {
         return "Proveedor{" +
-                "id_Proveedor=" + id_Proveedor +
+                "id_Proveedor='" + id_Proveedor + '\'' +
                 ", nombre='" + nombre + '\'' +
                 ", primerAP='" + primerAP + '\'' +
                 ", segundoAP='" + segundoAP + '\'' +
-                ", direccion='" + direccion + '\'' +
-                ", numTel=" + numTel +
-                ", numFax=" + numFax +
+                ", numTel='" + numTel + '\'' +
+                ", numFax='" + numFax + '\'' +
+                ", estado='" + estado + '\'' +
+                ", municipio='" + municipio + '\'' +
+                ", colonia='" + colonia + '\'' +
+                ", calle='" + calle + '\'' +
+                ", numeroCalle='" + numeroCalle + '\'' +
                 '}';
-    }
-
-    public Object[] tablaContenidoProveedor() {
-
-        Object[] objetoProveedor = {id_Proveedor,nombre,primerAP,segundoAP,direccion,numTel,numTel};
-
-        return objetoProveedor;
-
-
     }
 
     public String getId_Proveedor() {
@@ -73,14 +82,6 @@ public class Proveedor {
         this.segundoAP = segundoAP;
     }
 
-    public String getDireccion() {
-        return direccion;
-    }
-
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
-    }
-
     public String getNumTel() {
         return numTel;
     }
@@ -95,5 +96,45 @@ public class Proveedor {
 
     public void setNumFax(String numFax) {
         this.numFax = numFax;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public String getMunicipio() {
+        return municipio;
+    }
+
+    public void setMunicipio(String municipio) {
+        this.municipio = municipio;
+    }
+
+    public String getColonia() {
+        return colonia;
+    }
+
+    public void setColonia(String colonia) {
+        this.colonia = colonia;
+    }
+
+    public String getCalle() {
+        return calle;
+    }
+
+    public void setCalle(String calle) {
+        this.calle = calle;
+    }
+
+    public String getNumeroCalle() {
+        return numeroCalle;
+    }
+
+    public void setNumeroCalle(String numeroCalle) {
+        this.numeroCalle = numeroCalle;
     }
 }

@@ -3,7 +3,6 @@ package bd;
 import java.sql.*;
 
 public class ConexionBD {
-
     private PreparedStatement pstmt;
     private Connection conexion;
     private Statement stm;
@@ -17,7 +16,7 @@ public class ConexionBD {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
 
-            String URL = "jdbc:mysql://localhost:3306/hospital";
+            String URL = "jdbc:mysql://localhost:3306/hospital_wellmeadows";
 
             conexion = DriverManager.getConnection(URL, "root", "12345678");
 

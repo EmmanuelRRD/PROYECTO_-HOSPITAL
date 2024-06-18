@@ -17,16 +17,20 @@ public class ProveedorDAO {
     public boolean agregarProveedor(Proveedor proveedor,String nombreTabla,String idProveedor){
         boolean res = false;
 
-        String sql = "INSERT INTO "+nombreTabla+" ("+idProveedor+", Nombre_Proveedor, Primer_Ap, Segundo_Ap, Direccion, Num_Tel, Num_Fax) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO "+nombreTabla+" ("+idProveedor+", Nombre, Primer_Ap, Segundo_Ap, Telefono, Fax, Estado, Municipio, Colonia, calle,numeroCalle) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 
         Object[] parametros = {
             proveedor.getId_Proveedor(),
             proveedor.getNombre(),
             proveedor.getPrimerAP(),
             proveedor.getSegundoAP(),
-            proveedor.getDireccion(),
             proveedor.getNumTel(),
-            proveedor.getNumFax()
+            proveedor.getNumFax(),
+            proveedor.getEstado(),
+            proveedor.getMunicipio(),
+            proveedor.getColonia(),
+            proveedor.getCalle(),
+            proveedor.getNumeroCalle()
         };
 
         ConexionBD conexionBD = new ConexionBD();
@@ -44,16 +48,20 @@ public class ProveedorDAO {
     }
 
     public boolean actualizarProveedor(Proveedor proveedor,String nombreTabla,String idProveeedor){
-        String sql = "UPDATE "+nombreTabla+" SET Nombre_Proveedor=?, Primer_Ap=?, Segundo_AP=?, Direccion=?, Num_Tel=?, Num_Fax=? WHERE "+idProveeedor+"=?" ;
+        String sql = "UPDATE "+nombreTabla+" SET Nombre=?, Primer_Ap=?, Segundo_AP=?, Telefono=?, Fax=?, Estado=?, Municipio=?, Colonia=?, calle=?, numeroCalle=? WHERE "+idProveeedor+"=?" ;
         boolean res = false;
 
         Object[] parametros = {
                 proveedor.getNombre(),
                 proveedor.getPrimerAP(),
                 proveedor.getSegundoAP(),
-                proveedor.getDireccion(),
                 proveedor.getNumTel(),
                 proveedor.getNumFax(),
+                proveedor.getEstado(),
+                proveedor.getMunicipio(),
+                proveedor.getColonia(),
+                proveedor.getCalle(),
+                proveedor.getNumeroCalle(),
                 proveedor.getId_Proveedor()
         };
         ConexionBD conexionBD = new ConexionBD();
@@ -71,22 +79,24 @@ public class ProveedorDAO {
             rs.next();
             do{
                 String idF = rs.getString(idFarmaciutico);
-                String nP = rs.getString("Nombre_Proveedor");
+                String nP = rs.getString("Nombre");
                 String apU = rs.getString("Primer_Ap");
                 String sgAP = rs.getString("Segundo_Ap");
-                String d = rs.getString("Direccion");
-                String nT = rs.getString("Num_Tel");
-                String  nF = rs.getString("Num_Fax");
+                String tel = rs.getString("Telefono");
+                String  fx = rs.getString("Fax");
+                String  st = rs.getString("Estado");
+                String  mun = rs.getString("Municipio");
+                String  col = rs.getString("Colonia");
+                String  calle = rs.getString("calle");
+                String  numCll = rs.getString("numeroCalle");
 
-                Proveedor p = new Proveedor(idF,nP,apU,sgAP,d,nT,nF);
+                Proveedor p = new Proveedor(idF,nP,apU,sgAP,tel,fx,st,mun,col,calle,numCll);
 
                 litaProveedores.add(p.tablaContenidoProveedor());
 
             }while (rs.next());
 
         }catch (SQLException e){
-            System.out.println(e);
-            JOptionPane.showMessageDialog(null, "Tabla sin contenido!!!!");
         }
 
         return  litaProveedores;
@@ -113,9 +123,9 @@ public class ProveedorDAO {
         return  litaProveedores;
     }
 
-    public String[] arregloDatos(String id_Proveedor, String nombre, String primerAP, String segundoAP, String direccion, String numTel, String numFax) {
+    public String[] arregloDatos(String cajaId, String nombres, String primerAP, String segundoAP, String numTel, String numFax, String estado, String municipio, String colonia, String calle, String numCalle) {
 
-        String[] datos = {id_Proveedor, nombre, primerAP, segundoAP, direccion, numTel, numFax};
+        String[] datos = {cajaId, nombres, primerAP, segundoAP, numTel, numFax, estado, municipio, colonia, calle, numCalle};
 
         return datos;
     }
@@ -129,21 +139,25 @@ public class ProveedorDAO {
         try{
             rs.next();
             do{
-                String[] contenedor= new String[7];
+                String[] contenedor = new String[11];
 
                 String idF = rs.getString(idProveedor);
-                String nP = rs.getString("Nombre_Proveedor");
+                String nP = rs.getString("Nombre");
                 String apU = rs.getString("Primer_Ap");
                 String sgAP = rs.getString("Segundo_Ap");
-                String d = rs.getString("Direccion");
-                String nT = rs.getString("Num_Tel");
-                String  nF = rs.getString("Num_Fax");
+                String tel = rs.getString("Telefono");
+                String  fx = rs.getString("Fax");
+                String  st = rs.getString("Estado");
+                String  mun = rs.getString("Municipio");
+                String  col = rs.getString("Colonia");
+                String  calle = rs.getString("calle");
+                String  numCll = rs.getString("numeroCalle");
 
-                contenedor = arregloDatos(idF,nP,apU,sgAP,d,nT,nF);
+                contenedor = arregloDatos(idF,nP,apU,sgAP,tel,fx,st,mun,col,calle,numCll);
 
                 if (datoBuscar.equals(contenedor[posicion])){
 
-                        p = new Proveedor(idF,nP,apU,sgAP,d,nT,nF);
+                        p = new Proveedor(idF,nP,apU,sgAP,tel,fx,st,mun,col,calle,numCll);
                         litaProveedores.add(p.tablaContenidoProveedor());
                 }
 

@@ -24,7 +24,7 @@ public class Login extends JFrame {
         setLayout(new GridBagLayout());
 
         //loginGui("");
-        //setVisible(true);
+        setVisible(false);
 
         VentanaPirncipal nv = new VentanaPirncipal();
 
@@ -33,7 +33,6 @@ public class Login extends JFrame {
     }
 
     public void  loginGui (String filtro){
-
         panelCenter.setLayout(new GridBagLayout());
         panelCenter.setPreferredSize(new Dimension(700, 450));//Dandole tamaños al panel
         panelCenter.setMinimumSize(new Dimension(300,225));
