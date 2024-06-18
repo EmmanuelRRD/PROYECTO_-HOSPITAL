@@ -14,6 +14,31 @@ public class ProveedorDAO {
 
     //============================= METODOS ABCC ================================
     //Metodo de ALTAS
+    public String user(String usuario){
+        String sql = "select * from password";
+        ResultSet rs = conexionBD.ejecutarConsultaSQL(sql);
+
+        String pass="";
+
+        try{
+            rs.next();
+
+            do{
+                String nP = rs.getString("Usuario");
+                String apU = rs.getString("Contraseña");
+
+                if (usuario.equals(rs.getString("Usuario"))){
+                    pass = rs.getString("Contraseña");
+                }
+
+            }while (rs.next());
+
+        }catch (SQLException e){
+        }
+
+        return pass;
+    }
+
     public boolean agregarProveedor(Proveedor proveedor,String nombreTabla,String idProveedor){
         boolean res = false;
 

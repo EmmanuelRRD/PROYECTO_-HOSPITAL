@@ -1,6 +1,7 @@
 package Interface;
 
 import bd.ConexionBD;
+import controlador.ProveedorDAO;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,7 +11,7 @@ import java.awt.event.ActionListener;
 public class Login extends JFrame {
     private JPasswordField password = new JPasswordField(20);
     private GridBagConstraints gbc = new GridBagConstraints();
-    private JTextField user = new JTextField(20);
+    private JTextField usuario = new JTextField(20);
     private JPanel inicioSesion = new JPanel();
     private JPanel panelCenter= new JPanel();
     private JPanel image = new JPanel();
@@ -23,13 +24,10 @@ public class Login extends JFrame {
         setTitle("Inicio Sesion Hospital");
         setLayout(new GridBagLayout());
 
-        //loginGui("");
-        setVisible(false);
-
-        VentanaPirncipal nv = new VentanaPirncipal();
+        loginGui("");
+        setVisible(true);
 
         //interfacePrincipal();
-
     }
 
     public void  loginGui (String filtro){
@@ -70,9 +68,9 @@ public class Login extends JFrame {
         txtUser.setForeground(Color.GRAY);
         txtUser.setFont(new Font(fuente.getName(), Font.PLAIN, 18));
 
-        user.setBounds(20,120,350,30);
-        user.setFocusable(true);
-        user.setFont(new Font(fuente.getName(), Font.PLAIN, 20));
+        usuario.setBounds(20,120,350,30);
+        usuario.setFocusable(true);
+        usuario.setFont(new Font(fuente.getName(), Font.PLAIN, 20));
 
         txtPassword.setBounds(20, 170, 350,30);
         txtPassword.setForeground(Color.GRAY);
@@ -92,7 +90,7 @@ public class Login extends JFrame {
             }
         });
 
-        inicioSesion.add(user);
+        inicioSesion.add(usuario);
         inicioSesion.add(txtUser);
         inicioSesion.add(password);
         inicioSesion.add(txtPassword);
@@ -102,14 +100,22 @@ public class Login extends JFrame {
     }
 
     public void login(String filtro){
+        ProveedorDAO pd = new ProveedorDAO();
         String contraString = new String(password.getPassword());//El get pasword regresa un array y lo convierto a String
 
-        if (user.getText().equals("Usuario") && contraString.equals("Clave")){
-            dispose();
-            VentanaPirncipal ventanaPirncipal = new VentanaPirncipal();
+        String pass = pd.user(usuario.getText());
 
-        }else{
-            JOptionPane.showMessageDialog(null, "Usuario o Contraseña incorrectos");
+        if (!pass.equals("")){
+
+            if (pass.equals(contraString)){
+                dispose();
+                VentanaPirncipal ventanaPirncipal = new VentanaPirncipal();
+            }else {
+                JOptionPane.showMessageDialog(null, "Contraseña incorrecta");
+            }
+
+        }else {
+            JOptionPane.showMessageDialog(null, "Usuario no encontrado");
         }
     }
 
